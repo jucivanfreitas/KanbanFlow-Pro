@@ -104,7 +104,7 @@ services:
         - "traefik.docker.network=traefik_public"
 
         # Configuração HTTP
-        - "traefik.http.routers.kanbanflow-backend.rule=Host(`kanbanapi.visiochat.cloud`)"
+        - "traefik.http.routers.kanbanflow-backend.rule=Host(`kanbamapi.visiochat.cloud`)"
         - "traefik.http.routers.kanbanflow-backend.entrypoints=web"
 
         # Redirecionamento HTTP -> HTTPS
@@ -113,7 +113,7 @@ services:
         - "traefik.http.routers.kanbanflow-backend.middlewares=kanbanback-redirect"
 
         # Configuração HTTPS
-        - "traefik.http.routers.kanbanflow-backend-secure.rule=Host(`kanbanapi.visiochat.cloud`)"
+        - "traefik.http.routers.kanbanflow-backend-secure.rule=Host(`kanbamapi.visiochat.cloud`)"
         - "traefik.http.routers.kanbanflow-backend-secure.entrypoints=websecure"
         - "traefik.http.routers.kanbanflow-backend-secure.tls=true"
         - "traefik.http.routers.kanbanflow-backend-secure.tls.certresolver=le"
