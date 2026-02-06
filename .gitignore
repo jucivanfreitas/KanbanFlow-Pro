@@ -19,6 +19,18 @@ prompt_deploy.md
 .env.production
 .env.development
 
+# Documentação interna / notas de desenvolvimento
+PROXIMOS_PASSOS.md
+TESTE.md
+ACESSO.md
+DEPLOY_GUIDE.md
+DATAS_E_CORES.md
+KANBAN_GUIDE.md
+PAGINA_DETALHES.md
+README.md.backup
+test-api.js
+temp/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
