@@ -16,6 +16,10 @@ RUN npm install --ignore-scripts
 # Copiar código fonte
 COPY . .
 
+# Definir URL da API para produção (pode ser sobrescrito via --build-arg)
+ARG VITE_API_URL=https://kanbanapi.visiochat.cloud
+RUN echo "VITE_API_URL=${VITE_API_URL}" > .env.production
+
 # Build da aplicação com Vite
 RUN npm run build
 
