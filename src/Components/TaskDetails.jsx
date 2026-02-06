@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import './TaskDetails.css';
 
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
+
 function TaskDetails() {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -25,7 +27,7 @@ function TaskDetails() {
   const fetchTaskAndColumns = async () => {
     try {
       // Buscar dados do kanban
-      const response = await fetch('http://localhost:3001/api/kanban');
+      const response = await fetch(`${API_URL}/api/kanban`);
       const data = await response.json();
 
       // Encontrar a tarefa específica
@@ -63,7 +65,7 @@ function TaskDetails() {
     setSaving(true);
 
     try {
-      const response = await fetch(`http://localhost:3001/api/tasks/${id}`, {
+      const response = await fetch(`${API_URL}/api/tasks/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -98,7 +100,7 @@ function TaskDetails() {
     }
 
     try {
-      const response = await fetch(`http://localhost:3001/api/tasks/${id}`, {
+      const response = await fetch(`${API_URL}/api/tasks/${id}`, {
         method: 'DELETE',
       });
 
@@ -116,7 +118,7 @@ function TaskDetails() {
 
   const handleMarkComplete = async () => {
     try {
-      const response = await fetch(`http://localhost:3001/api/tasks/${id}`, {
+      const response = await fetch(`${API_URL}/api/tasks/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

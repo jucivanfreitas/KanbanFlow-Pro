@@ -1,271 +1,148 @@
-# 🚀 Próximos Passos - Deploy KanbanFlow Pro
+# 📋 Próximos Passos - KanbanFlow Pro
 
-## ✅ Arquivos Criados
+## ✅ Concluído
 
-1. **Dockerfile.frontend** - Build otimizado do React
-2. **Dockerfile.backend** - Container Node.js/Express
-3. **nginx.conf** - Configuração Nginx para SPA
-4. **docker-compose.yml** - Stack Docker Swarm com Traefik
-5. **.env.production** - Variáveis de ambiente
-6. **.dockerignore** - Otimização de build
-7. **.github/workflows/deploy.yml** - CI/CD automático
-8. **DEPLOY_GUIDE.md** - Documentação completa
-9. **server/server.js** - Atualizado com health check e CORS
+### Deploy & Infraestrutura
 
----
+- [x] Deploy em produção com Docker Compose + Traefik
+- [x] HTTPS/SSL via Let's Encrypt (certresolver "le")
+- [x] Frontend: https://kanbanflow.visiochat.cloud
+- [x] Backend: https://kanbanapi.visiochat.cloud
+- [x] Health checks configurados (curl frontend, node backend)
+- [x] Volume Docker para persistência de dados (`kanban_data`)
+- [x] CORS configurado entre frontend e backend
+- [x] Nginx otimizado (gzip, cache, security headers, SPA routing)
 
-## 🎯 O QUE FAZER AGORA
+### Código
 
-### 1️⃣ Configurar Secrets no GitHub (URGENTE!)
+- [x] Variáveis de ambiente (`VITE_API_URL`) substituindo URLs hardcoded
+- [x] Backend cria automaticamente diretório e arquivo de dados
+- [x] Tratamento de campos ausentes no `readData()`
+- [x] Dockerfiles otimizados (multi-stage, health checks)
 
-Acesse: https://github.com/jucivanfreitas/KanbanFlow-Pro/settings/secrets/actions
+### Documentação
 
-Adicione estes 4 secrets:
-
-```
-Nome: DOCKER_USERNAME
-Valor: jucivanfsantos
-
-Nome: DOCKER_TOKEN
-Valor: (obtenha em https://hub.docker.com/settings/security)
-
-Nome: VPS_HOST
-Valor: 72.60.143.197
-
-Nome: VPS_SSH_KEY
-Valor: (cole a chave privada SSH completa)
-```
-
-**Como obter a chave SSH:**
-
-```powershell
-# No PowerShell
-cat ~\.ssh\id_rsa
-# Copie TUDO (incluindo BEGIN e END PRIVATE KEY)
-```
+- [x] README.md atualizado
+- [x] DEPLOY_GUIDE.md com guia completo de deploy
+- [x] ACESSO.md com informações de acesso
+- [x] Branches organizados (production + main)
 
 ---
 
-### 2️⃣ Commit e Push dos Arquivos
+## 🔜 Próximos Passos Prioritários
 
-```powershell
-# No seu projeto local
-git add .
-git commit -m "feat: Configuração completa de deploy com Docker Swarm + Traefik"
-git push origin main
+### 1. 🔄 CI/CD - Deploy Automático via Git
 
-# Criar branch de produção
-git checkout -b production
-git push origin production
+Configurar GitHub Actions para deploy automático quando o branch `production` for atualizado:
+
+```yaml
+# .github/workflows/deploy.yml
+name: Deploy to VPS
+on:
+  push:
+    branches: [production]
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1
+        with:
+          host: 72.60.143.197
+          username: root
+          key: ${{ secrets.VPS_SSH_KEY }}
+          script: |
+            cd /var/www/kanbanflow-pro/temp
+            git pull origin production
+            docker build -f Dockerfile.frontend -t jucivanfsantos/kanbanflow-frontend:latest --no-cache .
+            docker build -f Dockerfile.backend -t jucivanfsantos/kanbanflow-backend:latest --no-cache .
+            cd /var/www/kanbanflow-pro
+            docker rm -f kanbanflow-frontend kanbanflow-backend
+            docker compose up -d
 ```
+
+**Secrets necessários no GitHub:**
+
+- `VPS_SSH_KEY`: Chave SSH privada para acesso ao VPS
+
+### 2. 🗄️ Migrar para Banco de Dados
+
+Substituir `tasks.json` por um banco de dados real:
+
+- **Opção 1:** SQLite (mais simples, arquivo local)
+- **Opção 2:** PostgreSQL (mais robusto, adicionar container)
+- **Opção 3:** MongoDB (flexível, schema-less)
+
+### 3. 🔐 Autenticação de Usuários
+
+- Login/Registro com JWT
+- Boards privados por usuário
+- Roles: admin, membro, visualizador
+- OAuth (Google, GitHub)
+
+### 4. 📱 Melhorias de UI/UX
+
+- [ ] Layout responsivo para mobile
+- [ ] Dark mode / Light mode
+- [ ] Animações de drag & drop mais suaves
+- [ ] Notificações toast para ações
+- [ ] Atalhos de teclado
+- [ ] Filtros e busca de tarefas
+
+### 5. 📊 Funcionalidades Avançadas
+
+- [ ] Múltiplos boards (workspaces)
+- [ ] Etiquetas/labels coloridos nas tarefas
+- [ ] Datas de vencimento e lembretes
+- [ ] Anexos de arquivos
+- [ ] Comentários nas tarefas
+- [ ] Histórico de atividades (audit log)
+- [ ] Exportar board (PDF, CSV)
+
+### 6. ⚡ Performance & Qualidade
+
+- [ ] Testes unitários (Vitest / Jest)
+- [ ] Testes E2E (Playwright / Cypress)
+- [ ] Linting e formatação (ESLint + Prettier)
+- [ ] Cache de API (React Query / SWR)
+- [ ] Websockets para atualizações em tempo real
+- [ ] Otimização de imagens Docker (layers caching)
+
+### 7. 🔒 Segurança
+
+- [ ] Rate limiting na API
+- [ ] Validação de inputs (express-validator)
+- [ ] Helmet.js para headers HTTP
+- [ ] Backup automático dos dados
+- [ ] Monitoramento com Uptime Kuma ou similar
 
 ---
 
-### 3️⃣ Conectar no VPS e Preparar
+## 🗓️ Roadmap Sugerido
 
-```powershell
-ssh root@72.60.143.197
-```
-
-**No VPS, execute:**
-
-```bash
-# Criar diretório
-mkdir -p /var/www/kanbanflow-pro
-cd /var/www/kanbanflow-pro
-
-# Login no Docker Hub
-docker login -u jucivanfsantos
-# Cole o token quando solicitado
-
-# Verificar se Swarm está ativo
-docker info | grep Swarm
-# Deve mostrar: "Swarm: active"
-
-# Verificar rede Traefik
-docker network ls | grep traefik_public
-# Deve aparecer a rede
-```
+| Fase       | Item                       | Prioridade |
+| ---------- | -------------------------- | ---------- |
+| **Fase 1** | CI/CD com GitHub Actions   | 🔴 Alta    |
+| **Fase 1** | Backup automático de dados | 🔴 Alta    |
+| **Fase 2** | Migração para PostgreSQL   | 🟡 Média   |
+| **Fase 2** | Autenticação JWT           | 🟡 Média   |
+| **Fase 3** | Múltiplos boards           | 🟢 Normal  |
+| **Fase 3** | Responsividade mobile      | 🟢 Normal  |
+| **Fase 4** | Websockets (tempo real)    | 🔵 Baixa   |
+| **Fase 4** | Testes automatizados       | 🔵 Baixa   |
 
 ---
 
-### 4️⃣ Fazer Primeiro Deploy Manual
-
-**No seu computador:**
-
-```powershell
-# Upload do docker-compose
-scp docker-compose.yml root@72.60.143.197:/var/www/kanbanflow-pro/
-```
-
-**No VPS:**
-
-```bash
-cd /var/www/kanbanflow-pro
-
-# Deploy da stack
-docker stack deploy -c docker-compose.yml kanbanflow --with-registry-auth
-
-# Aguardar 30 segundos e verificar
-docker stack services kanbanflow
-docker stack ps kanbanflow
-```
-
----
-
-### 5️⃣ Verificar Funcionamento
-
-**Testar endpoints:**
-
-```bash
-# No VPS ou no seu computador
-curl https://kanbanflow.visiochat.shop
-curl https://kanbamapi.visiochat.shop/api/health
-```
-
-**No navegador:**
-
-- Frontend: https://kanbanflow.visiochat.shop
-- Backend: https://kanbamapi.visiochat.shop/api/health
-
----
-
-## ⚠️ ATENÇÃO - Possíveis Problemas
-
-### Problema 1: Domínios não resolvem
-
-**Verificar DNS:**
-
-```powershell
-nslookup kanbanflow.visiochat.shop
-nslookup kanbamapi.visiochat.shop
-```
-
-**Solução:** Aguardar propagação DNS (até 24h) ou configurar wildcard:
+## 📝 Workflow de Desenvolvimento
 
 ```
-Tipo: A
-Nome: *
-Valor: 67.205.156.248
-TTL: 14400
+main (estável)
+  └── production (deploy automático)
+        └── feature/* (desenvolvimento)
 ```
 
-### Problema 2: Traefik não roteia
-
-**Verificar labels do Traefik:**
-
-```bash
-docker service inspect kanbanflow_frontend | grep traefik
-```
-
-**Solução:** Ver logs do Traefik:
-
-```bash
-docker service logs traefik_traefik -f | grep kanbanflow
-```
-
-### Problema 3: Certificado SSL não gera
-
-**Verificar certificado:**
-
-```bash
-docker exec $(docker ps -q -f name=traefik) cat /acme.json
-```
-
-**Solução:** Aguardar 2-5 minutos. Let's Encrypt demora um pouco.
-
----
-
-## 📊 Comandos de Monitoramento
-
-```bash
-# Status dos serviços
-docker stack services kanbanflow
-
-# Logs em tempo real
-docker service logs kanbanflow_frontend -f
-docker service logs kanbanflow_backend -f
-
-# Verificar health
-docker service ps kanbanflow --filter "desired-state=running"
-```
-
----
-
-## 🔄 Deploy Automático Futuro
-
-Após configurar os secrets, todo push na branch `production` fará deploy automático:
-
-```powershell
-git checkout production
-git merge main
-git push origin production
-```
-
-GitHub Actions fará:
-
-1. ✅ Build e testes
-2. ✅ Build das imagens Docker
-3. ✅ Push para Docker Hub
-4. ✅ Deploy no VPS
-5. ✅ Health check
-
----
-
-## 📝 Checklist Final
-
-- [ ] Secrets configurados no GitHub
-- [ ] Arquivos commitados e pushed
-- [ ] Branch `production` criada
-- [ ] Conectado no VPS via SSH
-- [ ] Docker login realizado no VPS
-- [ ] docker-compose.yml enviado para VPS
-- [ ] Stack deployed com `docker stack deploy`
-- [ ] Serviços rodando (verificado com `docker stack services`)
-- [ ] Frontend acessível via HTTPS
-- [ ] Backend respondendo no health check
-- [ ] Dados persistindo (criar uma tarefa de teste)
-
----
-
-## 🆘 Se Algo Der Errado
-
-1. **Ver logs:**
-
-   ```bash
-   docker service logs kanbanflow_frontend --tail 100
-   docker service logs kanbanflow_backend --tail 100
-   ```
-
-2. **Remover e redeployar:**
-
-   ```bash
-   docker stack rm kanbanflow
-   # Aguardar 30 segundos
-   docker stack deploy -c docker-compose.yml kanbanflow --with-registry-auth
-   ```
-
-3. **Me envie:**
-   - Logs dos serviços
-   - Output de `docker stack ps kanbanflow --no-trunc`
-   - Output de `docker stack services kanbanflow`
-
----
-
-## 🎉 Sucesso!
-
-Se tudo funcionou, você terá:
-
-✅ Frontend React rodando em: https://kanbanflow.visiochat.shop
-✅ Backend API rodando em: https://kanbamapi.visiochat.shop
-✅ SSL automático via Let's Encrypt
-✅ Deploy automático via GitHub Actions
-✅ Dados persistentes em volume Docker
-✅ Health checks configurados
-✅ CORS configurado corretamente
-
----
-
-**Está pronto para começar?** 🚀
-
-Siga os passos de 1 a 5 nesta ordem e me avise se tiver algum problema!
+1. Criar branch de feature a partir de `production`
+2. Desenvolver e testar localmente
+3. Merge na `production` → deploy automático via CI/CD
+4. Após validação em produção, merge na `main`

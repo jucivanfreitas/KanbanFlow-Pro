@@ -4,6 +4,8 @@ import KanbanColumn from './KanbanColumn';
 import AddTask from './AddTask';
 import './KanbanBoard.css';
 
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
+
 function KanbanBoard() {
   const navigate = useNavigate();
   const [columns, setColumns] = useState([]);
@@ -16,7 +18,7 @@ function KanbanBoard() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('http://localhost:3001/api/kanban');
+        const response = await fetch(`${API_URL}/api/kanban`);
         const data = await response.json();
         setColumns(data.columns || []);
         setTasks(data.tasks || []);
@@ -33,7 +35,7 @@ function KanbanBoard() {
   const addTask = async (title, dueDate) => {
     try {
       const firstColumnId = columns[0]?.id;
-      const response = await fetch('http://localhost:3001/api/tasks', {
+      const response = await fetch(`${API_URL}/api/tasks`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -60,7 +62,7 @@ function KanbanBoard() {
 
   const moveTask = async (taskId, newColumnId) => {
     try {
-      const response = await fetch(`http://localhost:3001/api/tasks/${taskId}`, {
+      const response = await fetch(`${API_URL}/api/tasks/${taskId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -86,7 +88,7 @@ function KanbanBoard() {
     }
 
     try {
-      const response = await fetch(`http://localhost:3001/api/tasks/${taskId}`, {
+      const response = await fetch(`${API_URL}/api/tasks/${taskId}`, {
         method: 'DELETE',
       });
 
@@ -104,7 +106,7 @@ function KanbanBoard() {
 
   const updateColumnTitle = async (columnId, newTitle) => {
     try {
-      const response = await fetch(`http://localhost:3001/api/columns/${columnId}`, {
+      const response = await fetch(`${API_URL}/api/columns/${columnId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -131,7 +133,7 @@ function KanbanBoard() {
     }
 
     try {
-      const response = await fetch('http://localhost:3001/api/columns', {
+      const response = await fetch(`${API_URL}/api/columns`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -160,13 +162,13 @@ function KanbanBoard() {
     }
 
     try {
-      const response = await fetch(`http://localhost:3001/api/columns/${columnId}`, {
+      const response = await fetch(`${API_URL}/api/columns/${columnId}`, {
         method: 'DELETE',
       });
 
       if (response.ok) {
         // Recarregar dados para atualizar tarefas movidas
-        const reloadResponse = await fetch('http://localhost:3001/api/kanban');
+        const reloadResponse = await fetch(`${API_URL}/api/kanban`);
         const data = await reloadResponse.json();
         setColumns(data.columns || []);
         setTasks(data.tasks || []);

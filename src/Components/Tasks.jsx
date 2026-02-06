@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import AddTask from './AddTask';
 import './Tasks.css';
 
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
+
 // componentes de tarefas
 function Tasks() {
   const [tasks, setTasks] = useState([]);
@@ -11,7 +13,7 @@ function Tasks() {
   useEffect(() => {
     const fetchTasks = async () => {
       try {
-        const response = await fetch('http://localhost:3001/api/tasks');
+        const response = await fetch(`${API_URL}/api/tasks`);
         const data = await response.json();
         setTasks(data);
         setLoading(false);
@@ -27,7 +29,7 @@ function Tasks() {
   const addTask = async (title) => {
     try {
       console.log('📤 Enviando tarefa para o servidor:', title);
-      const response = await fetch('http://localhost:3001/api/tasks', {
+      const response = await fetch(`${API_URL}/api/tasks`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -55,7 +57,7 @@ function Tasks() {
 
   const toggleTaskCompletion = async (taskId, currentStatus) => {
     try {
-      const response = await fetch(`http://localhost:3001/api/tasks/${taskId}`, {
+      const response = await fetch(`${API_URL}/api/tasks/${taskId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -84,7 +86,7 @@ function Tasks() {
     }
 
     try {
-      const response = await fetch(`http://localhost:3001/api/tasks/${taskId}`, {
+      const response = await fetch(`${API_URL}/api/tasks/${taskId}`, {
         method: 'DELETE',
       });
 

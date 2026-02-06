@@ -36,10 +36,24 @@ app.get('/api/health', (req, res) => {
 async function readData() {
   try {
     const data = await fs.readFile(TASKS_FILE, 'utf-8');
-    return JSON.parse(data);
+    const parsed = JSON.parse(data);
+    return {
+      columns: parsed.columns || [],
+      tasks: parsed.tasks || []
+    };
   } catch (error) {
     console.error('Erro ao ler dados:', error);
-    return { columns: [], tasks: [] };
+    // Se o arquivo não existe, criar com dados iniciais
+    const initialData = { columns: [], tasks: [] };
+    try {
+      const dir = path.dirname(TASKS_FILE);
+      await fs.mkdir(dir, { recursive: true });
+      await fs.writeFile(TASKS_FILE, JSON.stringify(initialData, null, 2), 'utf-8');
+      console.log('📁 Arquivo de dados criado:', TASKS_FILE);
+    } catch (writeError) {
+      console.error('❌ Erro ao criar arquivo de dados:', writeError);
+    }
+    return initialData;
   }
 }
 

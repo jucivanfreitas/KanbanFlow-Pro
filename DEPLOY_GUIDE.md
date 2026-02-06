@@ -2,374 +2,250 @@
 
 ## 📋 Pré-requisitos
 
-- ✅ VPS com Docker Swarm configurado
-- ✅ Traefik rodando na rede `traefik_public`
-- ✅ Domínios apontados para o VPS:
-  - `kanbanflow.visiochat.shop` → 72.60.143.197
-  - `kanbamapi.visiochat.shop` → 72.60.143.197
-- ✅ Conta no Docker Hub: `jucivanfsantos`
+- ✅ VPS com Docker instalado (72.60.143.197)
+- ✅ Traefik rodando como proxy reverso na rede `traefik_public`
+- ✅ Domínios DNS apontando para o VPS:
+  - `kanbanflow.visiochat.cloud` → 72.60.143.197
+  - `kanbanapi.visiochat.cloud` → 72.60.143.197
+- ✅ Conta Docker Hub: `jucivanfsantos`
 
 ---
 
-## 🔐 Configurar Secrets no GitHub
-
-1. Acesse: **Settings → Secrets and variables → Actions → New repository secret**
-
-2. Adicione os seguintes secrets:
+## 🏗️ Arquitetura de Deploy
 
 ```
-DOCKER_USERNAME: jucivanfsantos
-DOCKER_TOKEN: (seu token do Docker Hub)
-VPS_HOST: 72.60.143.197
-VPS_SSH_KEY: (conteúdo da chave privada SSH)
+Internet
+  │
+  ├── https://kanbanflow.visiochat.cloud
+  │       ↓
+  │   [Traefik :443] ──→ [kanbanflow-frontend :80 (Nginx)]
+  │
+  ├── https://kanbanapi.visiochat.cloud
+  │       ↓
+  │   [Traefik :443] ──→ [kanbanflow-backend :3001 (Express)]
+  │
+  └── Rede: traefik_public (overlay)
 ```
 
-### Como obter o Docker Token:
-
-1. Acesse: https://hub.docker.com/settings/security
-2. Clique em "New Access Token"
-3. Nome: `GitHub Actions`
-4. Copie o token gerado
-
-### Como obter a chave SSH:
-
-```bash
-# No seu computador local
-cat ~/.ssh/id_rsa
-# Copie TODO o conteúdo (incluindo BEGIN e END)
-```
+**Importante:** O Traefik roda em modo Docker (não Swarm), portanto os serviços são iniciados via `docker compose` com **labels no nível do container** (não dentro de `deploy`).
 
 ---
 
-## 🏗️ Primeiro Deploy (Manual)
+## 🔑 Informações de Acesso
 
-### 1. Conectar no VPS via SSH
+| Item              | Valor                              |
+| ----------------- | ---------------------------------- |
+| **VPS IP**        | 72.60.143.197                      |
+| **SSH**           | `ssh root@72.60.143.197`           |
+| **Docker Hub**    | jucivanfsantos                     |
+| **Frontend URL**  | https://kanbanflow.visiochat.cloud |
+| **Backend URL**   | https://kanbanapi.visiochat.cloud  |
+| **Diretório VPS** | /var/www/kanbanflow-pro/           |
+| **Código fonte**  | /var/www/kanbanflow-pro/temp/      |
+
+---
+
+## 📦 Primeiro Deploy (Manual)
+
+### 1. Conectar no VPS
 
 ```bash
 ssh root@72.60.143.197
 ```
 
-### 2. Verificar Docker Swarm e Traefik
-
-```bash
-# Verificar se Swarm está ativo
-docker info | grep Swarm
-
-# Verificar rede Traefik
-docker network ls | grep traefik_public
-
-# Verificar serviços Traefik
-docker service ls | grep traefik
-```
-
-### 3. Criar estrutura de diretórios
+### 2. Preparar diretórios
 
 ```bash
 mkdir -p /var/www/kanbanflow-pro
 cd /var/www/kanbanflow-pro
+
+# Clonar repositório
+git clone https://github.com/jucivanfreitas/KanbanFlow-Pro.git temp
+cd temp
+git checkout production
 ```
 
-### 4. Fazer login no Docker Hub
+### 3. Build das imagens
 
 ```bash
-docker login -u jucivanfsantos
-# Digite o token quando solicitado
+cd /var/www/kanbanflow-pro/temp
+
+# Build frontend (multi-stage: node build + nginx)
+docker build -f Dockerfile.frontend -t jucivanfsantos/kanbanflow-frontend:latest .
+
+# Build backend
+docker build -f Dockerfile.backend -t jucivanfsantos/kanbanflow-backend:latest .
 ```
 
-### 5. Upload do docker-compose.yml
-
-**No seu computador local:**
+### 4. Copiar docker-compose e iniciar
 
 ```bash
-scp docker-compose.yml root@72.60.143.197:/var/www/kanbanflow-pro/
-```
-
-### 6. Build e Deploy
-
-**No VPS:**
-
-```bash
+cp docker-compose.yml /var/www/kanbanflow-pro/
 cd /var/www/kanbanflow-pro
 
-# Deploy da stack
-docker stack deploy -c docker-compose.yml kanbanflow --with-registry-auth
+# Iniciar containers
+docker compose up -d
+
+# Verificar status
+docker ps --filter name=kanbanflow
 ```
 
-### 7. Verificar Deploy
+### 5. Verificar funcionamento
 
 ```bash
-# Ver serviços
-docker stack services kanbanflow
+# Health check do backend
+curl -s https://kanbanapi.visiochat.cloud/api/health
 
-# Ver tarefas (containers)
-docker stack ps kanbanflow
-
-# Ver logs do frontend
-docker service logs kanbanflow_frontend -f
-
-# Ver logs do backend
-docker service logs kanbanflow_backend -f
-```
-
----
-
-## 🔄 Deploy Automático (GitHub Actions)
-
-### Criar branch de produção
-
-```bash
-# No seu projeto local
-git checkout -b production
-git push origin production
-```
-
-### Trigger automático
-
-Toda vez que fizer push na branch `production`, o deploy será automático:
-
-```bash
-git checkout production
-git merge main
-git push origin production
-```
-
-### Deploy manual via GitHub
-
-1. Acesse: **Actions → Deploy to Production → Run workflow**
-2. Selecione branch: `production`
-3. Clique em "Run workflow"
-
----
-
-## 🔍 Verificar Aplicação
-
-### Testar endpoints
-
-```bash
 # Frontend
-curl -I https://kanbanflow.visiochat.shop
-
-# Backend Health
-curl https://kanbamapi.visiochat.shop/api/health
-
-# Backend API
-curl https://kanbamapi.visiochat.shop/api/kanban
-```
-
-### Acessar no navegador
-
-- **Frontend:** https://kanbanflow.visiochat.shop
-- **Backend API:** https://kanbamapi.visiochat.shop/api/health
-
----
-
-## 📊 Monitoramento
-
-### Ver status dos serviços
-
-```bash
-docker stack services kanbanflow
-```
-
-### Ver logs em tempo real
-
-```bash
-# Frontend
-docker service logs kanbanflow_frontend -f --tail 100
-
-# Backend
-docker service logs kanbanflow_backend -f --tail 100
-```
-
-### Ver estatísticas de recursos
-
-```bash
-docker stats
+curl -Ik https://kanbanflow.visiochat.cloud
 ```
 
 ---
 
-## 🔧 Comandos Úteis
+## 🔄 Atualizar Deploy
 
-### Restart de serviços
+Quando fizer alterações no código e quiser atualizar a produção:
+
+### Via SSH direto
 
 ```bash
-# Restart frontend
-docker service update --force kanbanflow_frontend
+ssh root@72.60.143.197
 
-# Restart backend
-docker service update --force kanbanflow_backend
+# Atualizar código
+cd /var/www/kanbanflow-pro/temp
+git pull origin production
 
-# Restart tudo
-docker stack deploy -c docker-compose.yml kanbanflow --with-registry-auth
+# Rebuild das imagens
+docker build -f Dockerfile.frontend -t jucivanfsantos/kanbanflow-frontend:latest --no-cache .
+docker build -f Dockerfile.backend -t jucivanfsantos/kanbanflow-backend:latest --no-cache .
+
+# Recriar containers
+cd /var/www/kanbanflow-pro
+docker rm -f kanbanflow-frontend kanbanflow-backend
+docker compose up -d
 ```
 
-### Escalar serviços
+### Via computador local (scp)
 
 ```bash
-# Aumentar replicas do frontend
-docker service scale kanbanflow_frontend=2
+# Enviar arquivos alterados
+scp docker-compose.yml root@72.60.143.197:/var/www/kanbanflow-pro/
+scp -r src/ server/ Dockerfile.* nginx.conf .env.production root@72.60.143.197:/var/www/kanbanflow-pro/temp/
 
-# Voltar para 1 replica
-docker service scale kanbanflow_frontend=1
-```
-
-### Ver informações detalhadas
-
-```bash
-# Inspecionar serviço
-docker service inspect kanbanflow_frontend
-
-# Ver tarefas com filtro
-docker stack ps kanbanflow --no-trunc --filter "desired-state=running"
-```
-
----
-
-## 🗑️ Remover Deploy
-
-### Remover stack completo
-
-```bash
-docker stack rm kanbanflow
-```
-
-### Remover volume de dados (CUIDADO!)
-
-```bash
-# Listar volumes
-docker volume ls | grep kanbanflow
-
-# Remover volume
-docker volume rm kanbanflow_kanban_data
-```
-
----
-
-## 🔄 Fazer Rollback
-
-### Via imagem anterior
-
-```bash
-# Listar imagens
-docker images | grep kanbanflow
-
-# Atualizar para imagem específica
-docker service update --image jucivanfsantos/kanbanflow-frontend:SHA kanbanflow_frontend
-```
-
-### Via redeploy
-
-```bash
-# Voltar código no Git
-git checkout <commit-anterior>
-git push origin production --force
+# Rebuild no VPS
+ssh root@72.60.143.197 "cd /var/www/kanbanflow-pro/temp && docker build -f Dockerfile.frontend -t jucivanfsantos/kanbanflow-frontend:latest --no-cache . && docker build -f Dockerfile.backend -t jucivanfsantos/kanbanflow-backend:latest --no-cache . && cd .. && docker rm -f kanbanflow-frontend kanbanflow-backend && docker compose up -d"
 ```
 
 ---
 
 ## 🐛 Troubleshooting
 
-### Serviço não inicia
+### Container não inicia / unhealthy
 
 ```bash
-# Ver logs de erro
-docker service ps kanbanflow_frontend --no-trunc
+# Ver logs
+docker logs kanbanflow-frontend --tail 50
+docker logs kanbanflow-backend --tail 50
 
-# Ver eventos
-docker events --filter service=kanbanflow_frontend
+# Verificar health
+docker ps --format 'table {{.Names}}\t{{.Status}}'
 ```
 
-### Problemas de rede
+### Traefik retorna 404
 
-```bash
-# Verificar se container está na rede Traefik
-docker service inspect kanbanflow_frontend | grep Networks
+O Traefik roda em modo Docker (não Swarm). As labels devem estar no **nível do container** (não em `deploy.labels`):
 
-# Reconectar na rede
-docker network connect traefik_public $(docker ps -q -f name=kanbanflow_frontend)
+```yaml
+# ✅ CORRETO - labels no container
+services:
+  frontend:
+    labels:
+      - "traefik.enable=true"
+
+# ❌ ERRADO - labels em deploy (só funciona em Swarm mode)
+services:
+  frontend:
+    deploy:
+      labels:
+        - "traefik.enable=true"
 ```
 
-### SSL não funciona
+O container também precisa estar **healthy** — Traefik ignora containers unhealthy.
+
+### Erro CORS no navegador
+
+Verificar se `FRONTEND_URL` no backend corresponde à URL real do frontend:
 
 ```bash
-# Ver logs do Traefik
-docker service logs traefik_traefik -f | grep kanbanflow
-
-# Verificar certificados
-docker exec $(docker ps -q -f name=traefik) ls -la /acme.json
+docker inspect kanbanflow-backend | grep FRONTEND_URL
+# Deve mostrar: https://kanbanflow.visiochat.cloud
 ```
 
-### CORS Error
+### Frontend chama localhost:3001
+
+O frontend é um build estático (SPA). A variável `VITE_API_URL` precisa estar definida **no momento do build**, não em runtime:
 
 ```bash
-# Verificar variável de ambiente do backend
-docker service inspect kanbanflow_backend | grep FRONTEND_URL
+# Verificar .env.production antes do build
+cat .env.production
+# Deve conter: VITE_API_URL=https://kanbanapi.visiochat.cloud
 
-# Atualizar variável
-docker service update --env-add FRONTEND_URL=https://kanbanflow.visiochat.shop kanbanflow_backend
+# Rebuild necessário após alterar .env.production
+docker build -f Dockerfile.frontend -t jucivanfsantos/kanbanflow-frontend:latest --no-cache .
 ```
 
 ### Dados não persistem
 
+O volume `kanban_data` persiste em `/app/data/tasks.json`:
+
 ```bash
 # Verificar volume
-docker volume inspect kanbanflow_kanban_data
+docker volume inspect kanbanflow-pro_kanban_data
 
-# Ver onde está montado
-docker service inspect kanbanflow_backend | grep Mounts -A 10
+# Ver dados atuais
+docker exec kanbanflow-backend cat /app/data/tasks.json
 ```
 
 ---
 
-## 📦 Backup e Restore
-
-### Fazer backup dos dados
+## 📊 Monitoramento
 
 ```bash
-# Criar backup
-docker run --rm -v kanbanflow_kanban_data:/data -v $(pwd):/backup alpine tar czf /backup/kanbanflow-backup-$(date +%Y%m%d).tar.gz -C /data .
+# Status dos containers
+docker ps --filter name=kanbanflow
+
+# Logs em tempo real
+docker logs -f kanbanflow-frontend
+docker logs -f kanbanflow-backend
+
+# Uso de recursos
+docker stats kanbanflow-frontend kanbanflow-backend
 ```
 
-### Restaurar backup
+---
+
+## 🗑️ Remover Deploy
 
 ```bash
-# Restaurar
-docker run --rm -v kanbanflow_kanban_data:/data -v $(pwd):/backup alpine tar xzf /backup/kanbanflow-backup-YYYYMMDD.tar.gz -C /data
+cd /var/www/kanbanflow-pro
+docker compose down
+
+# Remover dados (CUIDADO!)
+docker volume rm kanbanflow-pro_kanban_data
 ```
 
 ---
 
-## 🎯 Checklist de Deploy
+## ✅ Checklist de Deploy
 
-- [ ] Secrets configurados no GitHub
-- [ ] Domínios apontados para o VPS
-- [ ] Docker Swarm ativo no VPS
-- [ ] Traefik rodando com rede `traefik_public`
-- [ ] Login no Docker Hub realizado no VPS
-- [ ] Branch `production` criada
-- [ ] Push para `production` realizado
-- [ ] Frontend acessível via HTTPS
-- [ ] Backend API respondendo
-- [ ] Health checks funcionando
-- [ ] CORS configurado corretamente
-- [ ] Dados persistindo no volume
-
----
-
-## 📞 Suporte
-
-**E-mail:** devdatavisio@gmail.com
-
-**Logs importantes para debug:**
-
-```bash
-docker service logs kanbanflow_frontend --tail 100
-docker service logs kanbanflow_backend --tail 100
-docker service ps kanbanflow_frontend --no-trunc
-docker service ps kanbanflow_backend --no-trunc
-```
-
----
-
-✅ **Deploy completo! Sua aplicação está rodando em produção!** 🚀
+- [x] VPS acessível via SSH (72.60.143.197)
+- [x] Docker instalado e rodando
+- [x] Traefik configurado na rede `traefik_public`
+- [x] DNS: `kanbanflow.visiochat.cloud` → 72.60.143.197
+- [x] DNS: `kanbanapi.visiochat.cloud` → 72.60.143.197
+- [x] Imagens Docker construídas
+- [x] Containers rodando e healthy
+- [x] HTTPS/SSL funcionando via Let's Encrypt
+- [x] CORS configurado (FRONTEND_URL)
+- [x] API respondendo em /api/health
+- [x] Dados persistindo em volume Docker

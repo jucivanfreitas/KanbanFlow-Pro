@@ -11,21 +11,24 @@ services:
   # ==========================================
   frontend:
     image: jucivanfsantos/kanbanflow-frontend:latest
+    container_name: kanbanflow-frontend
+    restart: unless-stopped
     networks:
       - traefik_public
-    deploy:
-      mode: replicated
-      replicas: 1
-      labels:
-        - "traefik.enable=true"
-        - "traefik.docker.network=traefik_public"
-        - "traefik.http.routers.kanbanflow-frontend.rule=Host(`kanbanflow.visiochat.cloud`)"
-        - "traefik.http.routers.kanbanflow-frontend.entrypoints=web"
-        - "traefik.http.routers.kanbanflow-frontend-secure.rule=Host(`kanbanflow.visiochat.cloud`)"
-        - "traefik.http.routers.kanbanflow-frontend-secure.entrypoints=websecure"
-        - "traefik.http.routers.kanbanflow-frontend-secure.tls=true"
-        - "traefik.http.routers.kanbanflow-frontend-secure.tls.certresolver=le"
-        - "traefik.http.services.kanbanflow-frontend.loadbalancer.server.port=80"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:80/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=traefik_public"
+      - "traefik.http.routers.kanbanflow-frontend.rule=Host(`kanbanflow.visiochat.cloud`)"
+      - "traefik.http.routers.kanbanflow-frontend.entrypoints=websecure"
+      - "traefik.http.routers.kanbanflow-frontend.tls.certresolver=le"
+      - "traefik.http.services.kanbanflow-frontend.loadbalancer.server.port=80"
+      - "traefik.http.services.kanbanflow-frontend.loadbalancer.passHostHeader=true"
     ports:
       - "8080:80"
 
@@ -34,6 +37,8 @@ services:
   # ==========================================
   backend:
     image: jucivanfsantos/kanbanflow-backend:latest
+    container_name: kanbanflow-backend
+    restart: unless-stopped
     networks:
       - traefik_public
     volumes:
@@ -43,19 +48,14 @@ services:
       - PORT=3001
       - FRONTEND_URL=https://kanbanflow.visiochat.cloud
       - DATA_FILE_PATH=/app/data/tasks.json
-    deploy:
-      mode: replicated
-      replicas: 1
-      labels:
-        - "traefik.enable=true"
-        - "traefik.docker.network=traefik_public"
-        - "traefik.http.routers.kanbanflow-backend.rule=Host(`kanbamapi.visiochat.cloud`)"
-        - "traefik.http.routers.kanbanflow-backend.entrypoints=web"
-        - "traefik.http.routers.kanbanflow-backend-secure.rule=Host(`kanbamapi.visiochat.cloud`)"
-        - "traefik.http.routers.kanbanflow-backend-secure.entrypoints=websecure"
-        - "traefik.http.routers.kanbanflow-backend-secure.tls=true"
-        - "traefik.http.routers.kanbanflow-backend-secure.tls.certresolver=le"
-        - "traefik.http.services.kanbanflow-backend.loadbalancer.server.port=3001"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=traefik_public"
+      - "traefik.http.routers.kanbanflow-backend.rule=Host(`kanbanapi.visiochat.cloud`)"
+      - "traefik.http.routers.kanbanflow-backend.entrypoints=websecure"
+      - "traefik.http.routers.kanbanflow-backend.tls.certresolver=le"
+      - "traefik.http.services.kanbanflow-backend.loadbalancer.server.port=3001"
+      - "traefik.http.services.kanbanflow-backend.loadbalancer.passHostHeader=true"
     ports:
       - "3001:3001"
 
