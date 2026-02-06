@@ -35,6 +35,7 @@ jobs:
   build-images:
     runs-on: ubuntu-latest
     needs: build-and-test
+    environment: producao   # 🟢 AQUI
 
     steps:
       - uses: actions/checkout@v4
@@ -67,6 +68,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     needs: build-images
+    environment: producao   # 🟢 AQUI
 
     steps:
       - uses: actions/checkout@v4
@@ -89,6 +91,7 @@ jobs:
   health-check:
     runs-on: ubuntu-latest
     needs: deploy
+    environment: producao   # 🟢 OPCIONAL (mas recomendado)
 
     steps:
       - run: sleep 10
