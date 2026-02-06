@@ -35,7 +35,7 @@ services:
         - "traefik.docker.network=traefik_public"
 
         # Configuração HTTP
-        - "traefik.http.routers.kanbanflow-frontend.rule=Host(`kanbanflow.visiochat.shop`)"
+        - "traefik.http.routers.kanbanflow-frontend.rule=Host(`kanbanflow.visiochat.cloud`)"
         - "traefik.http.routers.kanbanflow-frontend.entrypoints=web"
 
         # Redirecionamento HTTP -> HTTPS
@@ -44,7 +44,7 @@ services:
         - "traefik.http.routers.kanbanflow-frontend.middlewares=kanbanflow-redirect"
 
         # Configuração HTTPS
-        - "traefik.http.routers.kanbanflow-frontend-secure.rule=Host(`kanbanflow.visiochat.shop`)"
+        - "traefik.http.routers.kanbanflow-frontend-secure.rule=Host(`kanbanflow.visiochat.cloud`)"
         - "traefik.http.routers.kanbanflow-frontend-secure.entrypoints=websecure"
         - "traefik.http.routers.kanbanflow-frontend-secure.tls=true"
         - "traefik.http.routers.kanbanflow-frontend-secure.tls.certresolver=le"
@@ -83,7 +83,7 @@ services:
     environment:
       - NODE_ENV=production
       - PORT=3001
-      - FRONTEND_URL=https://kanbanflow.visiochat.shop
+      - FRONTEND_URL=https://kanbanflow.visiochat.cloud
       - DATA_FILE_PATH=/app/data/tasks.json
     deploy:
       replicas: 1
@@ -104,7 +104,7 @@ services:
         - "traefik.docker.network=traefik_public"
 
         # Configuração HTTP
-        - "traefik.http.routers.kanbanflow-backend.rule=Host(`kanbamapi.visiochat.shop`)"
+        - "traefik.http.routers.kanbanflow-backend.rule=Host(`kanbanapi.visiochat.cloud`)"
         - "traefik.http.routers.kanbanflow-backend.entrypoints=web"
 
         # Redirecionamento HTTP -> HTTPS
@@ -113,14 +113,14 @@ services:
         - "traefik.http.routers.kanbanflow-backend.middlewares=kanbanback-redirect"
 
         # Configuração HTTPS
-        - "traefik.http.routers.kanbanflow-backend-secure.rule=Host(`kanbamapi.visiochat.shop`)"
+        - "traefik.http.routers.kanbanflow-backend-secure.rule=Host(`kanbanapi.visiochat.cloud`)"
         - "traefik.http.routers.kanbanflow-backend-secure.entrypoints=websecure"
         - "traefik.http.routers.kanbanflow-backend-secure.tls=true"
         - "traefik.http.routers.kanbanflow-backend-secure.tls.certresolver=le"
 
         # CORS Headers
         - "traefik.http.middlewares.kanbanback-cors.headers.accesscontrolallowmethods=GET,POST,PUT,DELETE,OPTIONS"
-        - "traefik.http.middlewares.kanbanback-cors.headers.accesscontrolalloworiginlist=https://kanbanflow.visiochat.shop"
+        - "traefik.http.middlewares.kanbanback-cors.headers.accesscontrolalloworiginlist=https://kanbanflow.visiochat.cloud"
         - "traefik.http.middlewares.kanbanback-cors.headers.accesscontrolallowcredentials=true"
         - "traefik.http.middlewares.kanbanback-cors.headers.accesscontrolallowheaders=Content-Type,Authorization"
         - "traefik.http.middlewares.kanbanback-cors.headers.accesscontrolmaxage=3600"
