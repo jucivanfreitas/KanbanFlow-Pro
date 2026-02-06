@@ -152,7 +152,7 @@ function Help() {
 
   const filteredSections = () => {
     if (!searchTerm) return sections;
-    
+
     const filtered = {};
     Object.keys(sections).forEach(key => {
       const section = sections[key];
@@ -160,7 +160,7 @@ function Help() {
         item.question.toLowerCase().includes(searchTerm.toLowerCase()) ||
         item.answer.toLowerCase().includes(searchTerm.toLowerCase())
       );
-      
+
       if (matchingContent.length > 0) {
         filtered[key] = {
           ...section,
@@ -168,7 +168,7 @@ function Help() {
         };
       }
     });
-    
+
     return filtered;
   };
 
@@ -198,7 +198,7 @@ function Help() {
           className="search-input"
         />
         {searchTerm && (
-          <button 
+          <button
             className="btn-clear-search"
             onClick={() => setSearchTerm('')}
           >
@@ -231,7 +231,7 @@ function Help() {
                   <span className="section-icon">{section.icon}</span>
                   {section.title}
                 </h2>
-                
+
                 <div className="faq-list">
                   {section.content.map((item, index) => (
                     <div key={index} className="faq-item">

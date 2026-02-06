@@ -24,30 +24,40 @@ function AddTask({ onAddTask }) {
 
   return (
     <div className="add-task-container">
+       <button
+            onClick={handleAddTask}
+            className="add-task-button"
+          >
+            Adicionar Tarefa
+          </button>
       <div className="add-task-inputs">
-        <input
-          type="text"
-          value={newTaskTitle}
-          onChange={(e) => setNewTaskTitle(e.target.value)}
-          onKeyPress={handleKeyPress}
-          placeholder="Digite o título da tarefa..."
-          className="add-task-input"
-        />
-        <input
-          type="date"
-          value={dueDate}
-          onChange={(e) => setDueDate(e.target.value)}
-          className="add-task-date"
-          title="Data de previsão (opcional)"
-        />
+        <div className="input-group">
+          <label htmlFor="task-title" className="input-label">Título da Tarefa</label>
+          <input
+            id="task-title"
+            type="text"
+            value={newTaskTitle}
+            onChange={(e) => setNewTaskTitle(e.target.value)}
+            onKeyPress={handleKeyPress}
+            placeholder="Digite o título da tarefa..."
+            className="add-task-input"
+          />
+        </div>
+        <div className="input-group">
+          <label htmlFor="task-date" className="input-label">Data Planejada</label>
+          <input
+            id="task-date"
+            type="date"
+            value={dueDate}
+            onChange={(e) => setDueDate(e.target.value)}
+            className="add-task-date"
+            title="Data de previsão (opcional)"
+          />
+
+        </div>
+        </div>
+
       </div>
-      <button
-        onClick={handleAddTask}
-        className="add-task-button"
-      >
-        Adicionar Tarefa
-      </button>
-    </div>
   );
 }
 

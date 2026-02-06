@@ -14,6 +14,16 @@
       "id": "col-3",
       "title": "Done",
       "order": 2
+    },
+    {
+      "id": "col-1770346499120",
+      "title": "nova",
+      "order": 3
+    },
+    {
+      "id": "col-1770346507953",
+      "title": "nova",
+      "order": 4
     }
   ],
   "tasks": [

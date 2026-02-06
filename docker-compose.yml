@@ -1,0 +1,149 @@
+# ========================================
+# Docker Compose para KanbanFlow Pro
+# Deploy com Docker Swarm + Traefik
+# ========================================
+
+version: '3.8'
+
+services:
+  # ==========================================
+  # Frontend - React + Nginx
+  # ==========================================
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    image: jucivanfsantos/kanbanflow-frontend:latest
+    networks:
+      - traefik_public
+    deploy:
+      replicas: 1
+      resources:
+        limits:
+          cpus: '0.25'
+          memory: 512M
+        reservations:
+          cpus: '0.1'
+          memory: 256M
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+      labels:
+        # Habilitar Traefik
+        - "traefik.enable=true"
+        - "traefik.docker.network=traefik_public"
+
+        # Configuração HTTP
+        - "traefik.http.routers.kanbanflow-frontend.rule=Host(`kanbanflow.visiochat.shop`)"
+        - "traefik.http.routers.kanbanflow-frontend.entrypoints=web"
+
+        # Redirecionamento HTTP -> HTTPS
+        - "traefik.http.middlewares.kanbanflow-redirect.redirectscheme.scheme=https"
+        - "traefik.http.middlewares.kanbanflow-redirect.redirectscheme.permanent=true"
+        - "traefik.http.routers.kanbanflow-frontend.middlewares=kanbanflow-redirect"
+
+        # Configuração HTTPS
+        - "traefik.http.routers.kanbanflow-frontend-secure.rule=Host(`kanbanflow.visiochat.shop`)"
+        - "traefik.http.routers.kanbanflow-frontend-secure.entrypoints=websecure"
+        - "traefik.http.routers.kanbanflow-frontend-secure.tls=true"
+        - "traefik.http.routers.kanbanflow-frontend-secure.tls.certresolver=le"
+
+        # Headers de segurança
+        - "traefik.http.middlewares.kanbanflow-headers.headers.sslredirect=true"
+        - "traefik.http.middlewares.kanbanflow-headers.headers.stsSeconds=31536000"
+        - "traefik.http.middlewares.kanbanflow-headers.headers.stsIncludeSubdomains=true"
+        - "traefik.http.middlewares.kanbanflow-headers.headers.stsPreload=true"
+        - "traefik.http.middlewares.kanbanflow-headers.headers.forceSTSHeader=true"
+        - "traefik.http.middlewares.kanbanflow-headers.headers.frameDeny=true"
+        - "traefik.http.middlewares.kanbanflow-headers.headers.contentTypeNosniff=true"
+        - "traefik.http.middlewares.kanbanflow-headers.headers.browserXssFilter=true"
+        - "traefik.http.routers.kanbanflow-frontend-secure.middlewares=kanbanflow-headers"
+
+        # Service e porta
+        - "traefik.http.services.kanbanflow-frontend.loadbalancer.server.port=80"
+
+        # Health check
+        - "traefik.http.services.kanbanflow-frontend.loadbalancer.healthcheck.path=/health"
+        - "traefik.http.services.kanbanflow-frontend.loadbalancer.healthcheck.interval=30s"
+        - "traefik.http.services.kanbanflow-frontend.loadbalancer.healthcheck.timeout=5s"
+
+  # ==========================================
+  # Backend - Node.js + Express
+  # ==========================================
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    image: jucivanfsantos/kanbanflow-backend:latest
+    networks:
+      - traefik_public
+    volumes:
+      - kanban_data:/app/data
+    environment:
+      - NODE_ENV=production
+      - PORT=3001
+      - FRONTEND_URL=https://kanbanflow.visiochat.shop
+      - DATA_FILE_PATH=/app/data/tasks.json
+    deploy:
+      replicas: 1
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
+        reservations:
+          cpus: '0.25'
+          memory: 256M
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+      labels:
+        # Habilitar Traefik
+        - "traefik.enable=true"
+        - "traefik.docker.network=traefik_public"
+
+        # Configuração HTTP
+        - "traefik.http.routers.kanbanflow-backend.rule=Host(`kanbamapi.visiochat.shop`)"
+        - "traefik.http.routers.kanbanflow-backend.entrypoints=web"
+
+        # Redirecionamento HTTP -> HTTPS
+        - "traefik.http.middlewares.kanbanback-redirect.redirectscheme.scheme=https"
+        - "traefik.http.middlewares.kanbanback-redirect.redirectscheme.permanent=true"
+        - "traefik.http.routers.kanbanflow-backend.middlewares=kanbanback-redirect"
+
+        # Configuração HTTPS
+        - "traefik.http.routers.kanbanflow-backend-secure.rule=Host(`kanbamapi.visiochat.shop`)"
+        - "traefik.http.routers.kanbanflow-backend-secure.entrypoints=websecure"
+        - "traefik.http.routers.kanbanflow-backend-secure.tls=true"
+        - "traefik.http.routers.kanbanflow-backend-secure.tls.certresolver=le"
+
+        # CORS Headers
+        - "traefik.http.middlewares.kanbanback-cors.headers.accesscontrolallowmethods=GET,POST,PUT,DELETE,OPTIONS"
+        - "traefik.http.middlewares.kanbanback-cors.headers.accesscontrolalloworiginlist=https://kanbanflow.visiochat.shop"
+        - "traefik.http.middlewares.kanbanback-cors.headers.accesscontrolallowcredentials=true"
+        - "traefik.http.middlewares.kanbanback-cors.headers.accesscontrolallowheaders=Content-Type,Authorization"
+        - "traefik.http.middlewares.kanbanback-cors.headers.accesscontrolmaxage=3600"
+        - "traefik.http.routers.kanbanflow-backend-secure.middlewares=kanbanback-cors"
+
+        # Service e porta
+        - "traefik.http.services.kanbanflow-backend.loadbalancer.server.port=3001"
+
+        # Health check
+        - "traefik.http.services.kanbanflow-backend.loadbalancer.healthcheck.path=/api/health"
+        - "traefik.http.services.kanbanflow-backend.loadbalancer.healthcheck.interval=30s"
+        - "traefik.http.services.kanbanflow-backend.loadbalancer.healthcheck.timeout=5s"
+
+# ==========================================
+# Volumes
+# ==========================================
+volumes:
+  kanban_data:
+    driver: local
+
+# ==========================================
+# Redes
+# ==========================================
+networks:
+  traefik_public:
+    external: true

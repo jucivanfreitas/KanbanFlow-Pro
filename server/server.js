@@ -8,12 +8,29 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const app = express();
-const PORT = 3001;
-const TASKS_FILE = path.join(__dirname, 'data', 'tasks.json');
+const PORT = process.env.PORT || 3001;
+const TASKS_FILE = process.env.DATA_FILE_PATH || path.join(__dirname, 'data', 'tasks.json');
+
+// CORS configurado para produção
+const corsOptions = {
+  origin: process.env.FRONTEND_URL || 'http://localhost:5173',
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+};
 
 // Middleware
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(express.json());
+
+// Health Check Endpoint
+app.get('/api/health', (req, res) => {
+  res.status(200).json({
+    status: 'ok',
+    timestamp: new Date().toISOString(),
+    environment: process.env.NODE_ENV || 'development'
+  });
+});
 
 // Função para ler dados do arquivo
 async function readData() {
@@ -224,7 +241,10 @@ app.delete('/api/columns/:id', async (req, res) => {
   }
 });
 
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0', () => {
   console.log(`🚀 Servidor rodando na porta ${PORT}`);
   console.log(`📝 API disponível em http://localhost:${PORT}/api/tasks`);
+  console.log(`🏥 Health check em http://localhost:${PORT}/api/health`);
+  console.log(`🌍 Ambiente: ${process.env.NODE_ENV || 'development'}`);
+  console.log(`📁 Arquivo de dados: ${TASKS_FILE}`);
 });

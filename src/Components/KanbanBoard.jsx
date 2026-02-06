@@ -189,7 +189,7 @@ function KanbanBoard() {
       <div className="kanban-header">
         <h2 className="kanban-title">Kanban Board</h2>
         <div className="header-actions">
-          <button 
+          <button
             onClick={() => navigate('/help')}
             className="btn-help"
             title="Central de Ajuda"
