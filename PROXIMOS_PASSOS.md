@@ -30,7 +30,7 @@ Nome: DOCKER_TOKEN
 Valor: (obtenha em https://hub.docker.com/settings/security)
 
 Nome: VPS_HOST
-Valor: 67.205.156.248
+Valor: 72.60.143.197
 
 Nome: VPS_SSH_KEY
 Valor: (cole a chave privada SSH completa)
@@ -64,7 +64,7 @@ git push origin production
 ### 3️⃣ Conectar no VPS e Preparar
 
 ```powershell
-ssh root@67.205.156.248
+ssh root@72.60.143.197
 ```
 
 **No VPS, execute:**
@@ -95,7 +95,7 @@ docker network ls | grep traefik_public
 
 ```powershell
 # Upload do docker-compose
-scp docker-compose.yml root@67.205.156.248:/var/www/kanbanflow-pro/
+scp docker-compose.yml root@72.60.143.197:/var/www/kanbanflow-pro/
 ```
 
 **No VPS:**

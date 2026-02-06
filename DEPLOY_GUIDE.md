@@ -5,8 +5,8 @@
 - ✅ VPS com Docker Swarm configurado
 - ✅ Traefik rodando na rede `traefik_public`
 - ✅ Domínios apontados para o VPS:
-  - `kanbanflow.visiochat.shop` → 67.205.156.248
-  - `kanbamapi.visiochat.shop` → 67.205.156.248
+  - `kanbanflow.visiochat.shop` → 72.60.143.197
+  - `kanbamapi.visiochat.shop` → 72.60.143.197
 - ✅ Conta no Docker Hub: `jucivanfsantos`
 
 ---
@@ -20,7 +20,7 @@
 ```
 DOCKER_USERNAME: jucivanfsantos
 DOCKER_TOKEN: (seu token do Docker Hub)
-VPS_HOST: 67.205.156.248
+VPS_HOST: 72.60.143.197
 VPS_SSH_KEY: (conteúdo da chave privada SSH)
 ```
 
@@ -46,7 +46,7 @@ cat ~/.ssh/id_rsa
 ### 1. Conectar no VPS via SSH
 
 ```bash
-ssh root@67.205.156.248
+ssh root@72.60.143.197
 ```
 
 ### 2. Verificar Docker Swarm e Traefik
@@ -81,7 +81,7 @@ docker login -u jucivanfsantos
 **No seu computador local:**
 
 ```bash
-scp docker-compose.yml root@67.205.156.248:/var/www/kanbanflow-pro/
+scp docker-compose.yml root@72.60.143.197:/var/www/kanbanflow-pro/
 ```
 
 ### 6. Build e Deploy
