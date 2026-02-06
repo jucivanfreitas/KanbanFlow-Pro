@@ -107,21 +107,21 @@ jobs:
           mkdir -p ~/.ssh
           echo "${{ secrets.VPS_SSH_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan -H ${{ secrets.VPS_HOST }} >> ~/.ssh/known_hosts
+          ssh-keyscan -H 72.60.143.197 >> ~/.ssh/known_hosts
 
       - name: 📁 Create directory structure
         run: |
-          ssh root@${{ secrets.VPS_HOST }} << 'EOF'
+          ssh root@72.60.143.197 << 'EOF'
             mkdir -p /var/www/kanbanflow-pro
           EOF
 
       - name: 📤 Upload docker-compose.yml
         run: |
-          scp docker-compose.yml root@${{ secrets.VPS_HOST }}:/var/www/kanbanflow-pro/
+          scp docker-compose.yml root@72.60.143.197:/var/www/kanbanflow-pro/
 
       - name: 🚀 Deploy with Docker Swarm
         run: |
-          ssh root@${{ secrets.VPS_HOST }} << 'EOF'
+          ssh root@72.60.143.197 << 'EOF'
             cd /var/www/kanbanflow-pro
 
             # Pull latest images
@@ -143,7 +143,7 @@ jobs:
 
       - name: ✅ Verify deployment
         run: |
-          ssh root@${{ secrets.VPS_HOST }} << 'EOF'
+          ssh root@72.60.143.197 << 'EOF'
             echo "🔍 Checking services..."
             docker stack ps kanbanflow --no-trunc
 
