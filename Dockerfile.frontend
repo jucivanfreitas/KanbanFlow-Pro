@@ -10,8 +10,8 @@ WORKDIR /app
 # Copiar arquivos de dependências
 COPY package*.json ./
 
-# Instalar dependências
-RUN npm ci --only=production --ignore-scripts
+# Instalar dependências (incluindo devDependencies para Vite)
+RUN npm install --ignore-scripts
 
 # Copiar código fonte
 COPY . .
