@@ -16,7 +16,7 @@ services:
     ports:
       - "8080:80"
     networks:
-      - kanban_network
+      - traefik_public
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=traefik_public"
@@ -42,13 +42,13 @@ services:
     ports:
       - "3001:3001"
     networks:
-      - kanban_network
+      - traefik_public
     volumes:
       - kanban_data:/app/data
     environment:
       - NODE_ENV=production
       - PORT=3001
-      - FRONTEND_URL=https://kanbanflow.visiochat.cloud
+      - FRONTEND_URL=http://72.60.143.197:8080
       - DATA_FILE_PATH=/app/data/tasks.json
     labels:
       - "traefik.enable=true"
@@ -74,7 +74,5 @@ volumes:
 # Redes
 # ==========================================
 networks:
-  kanban_network:
-    driver: bridge
   traefik_public:
     external: true
