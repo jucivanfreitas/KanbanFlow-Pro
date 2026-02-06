@@ -1,0 +1,84 @@
+/* Estilos do componente AddTask */
+
+.add-task-container {
+  margin-bottom: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+@media (min-width: 640px) {
+  .add-task-container {
+    flex-direction: row;
+  }
+}
+
+.add-task-inputs {
+  flex: 1;
+  display: flex;
+  gap: 0.5rem;
+  flex-direction: column;
+}
+
+@media (min-width: 640px) {
+  .add-task-inputs {
+    flex-direction: row;
+  }
+}
+
+.add-task-input {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  border: 2px solid #d1d5db;
+  background-color: white;
+  color: #1f2937;
+  min-width: 200px;
+  font-size: 1rem;
+  transition: all 0.2s;
+}
+
+.add-task-date {
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  border: 2px solid #d1d5db;
+  background-color: white;
+  color: #1f2937;
+  font-size: 1rem;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+
+.add-task-input:focus,
+.add-task-date:focus {
+  outline: none;
+  border-color: #6366f1;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+.add-task-input::placeholder {
+  color: #9ca3af;
+}
+
+.add-task-button {
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(to right, #6366f1, #9333ea);
+  color: white;
+  font-weight: 600;
+  border-radius: 0.5rem;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 4px 6px rgba(99, 102, 241, 0.2);
+  white-space: nowrap;
+}
+
+.add-task-button:hover {
+  background: linear-gradient(to right, #4f46e5, #7c3aed);
+  box-shadow: 0 6px 8px rgba(99, 102, 241, 0.3);
+  transform: translateY(-1px);
+}
+
+.add-task-button:active {
+  transform: scale(0.98);
+}

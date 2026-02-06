@@ -1,0 +1,57 @@
+{
+  "columns": [
+    {
+      "id": "col-1",
+      "title": "Backlog",
+      "order": 0
+    },
+    {
+      "id": "col-2",
+      "title": "In Progress",
+      "order": 1
+    },
+    {
+      "id": "col-3",
+      "title": "Done",
+      "order": 2
+    }
+  ],
+  "tasks": [
+    {
+      "id": 2,
+      "title": "Fazer exercícios de JavaScript",
+      "description": "Completar os exercícios do módulo 3 sobre funções e arrays",
+      "columnId": "col-3",
+      "createdAt": "2026-02-05T10:00:00.000Z",
+      "dueDate": "2026-02-10T23:59:59.000Z",
+      "completedAt": "2026-02-05T14:30:00.000Z"
+    },
+    {
+      "id": 8,
+      "title": "exibir tarefa q",
+      "description": "Implementar exibição de tarefas com filtros e busca",
+      "columnId": "col-3",
+      "createdAt": "2026-02-05T11:00:00.000Z",
+      "dueDate": "2026-02-08T23:59:59.000Z",
+      "completedAt": "2026-02-05T23:28:37.979Z"
+    },
+    {
+      "id": 9,
+      "title": "backlog de Loja corrigido 2",
+      "description": "sobre a mente da gente quando  cansa a mente cansa isso",
+      "columnId": "col-1",
+      "createdAt": "2026-02-05T12:00:00.000Z",
+      "dueDate": "2026-02-28T00:00:00.000Z",
+      "completedAt": null
+    },
+    {
+      "id": 10,
+      "title": "tarefa teste 005",
+      "description": "dadsdasdsadasddsadasd",
+      "columnId": "col-2",
+      "createdAt": "2026-02-05T23:29:04.275Z",
+      "dueDate": "2026-02-06T00:00:00.000Z",
+      "completedAt": null
+    }
+  ]
+}

@@ -1,0 +1,134 @@
+/* Estilos do TaskCard */
+
+.task-card {
+  background-color: white;
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  cursor: grab;
+  transition: all 0.2s;
+  border-left: 4px solid #6366f1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+/* Estados baseados no prazo */
+.task-card.task-status-overdue {
+  border-left-color: #ef4444;
+  background-color: #fef2f2;
+}
+
+.task-card.task-status-due-soon {
+  border-left-color: #f59e0b;
+  background-color: #fffbeb;
+}
+
+.task-card.task-status-on-track {
+  border-left-color: #3b82f6;
+  background-color: white;
+}
+
+.task-card.task-status-completed {
+  border-left-color: #22c55e;
+  background-color: #f0fdf4;
+}
+
+.task-card.task-status-no-date {
+  border-left-color: #6b7280;
+  background-color: white;
+}
+
+.task-card:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
+}
+
+.task-card.dragging {
+  opacity: 0.5;
+  cursor: grabbing;
+  transform: rotate(3deg);
+}
+
+.task-card-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.task-card-title {
+  flex: 1;
+  margin: 0;
+  color: #1f2937;
+  font-size: 0.95rem;
+  font-weight: 600;
+  line-height: 1.4;
+  word-wrap: break-word;
+}
+
+.task-card-delete {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.1rem;
+  padding: 0.125rem 0.25rem;
+  opacity: 0;
+  transition: all 0.2s;
+  border-radius: 0.25rem;
+  flex-shrink: 0;
+}
+
+.task-card:hover .task-card-delete {
+  opacity: 0.5;
+}
+
+.task-card-delete:hover {
+  opacity: 1 !important;
+  background-color: #fee2e2;
+  transform: scale(1.1);
+}
+
+.task-card-dates {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  font-size: 0.75rem;
+}
+
+.task-date {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  color: #6b7280;
+}
+
+.date-label {
+  font-weight: 500;
+}
+
+.date-value {
+  color: #374151;
+}
+
+.task-status-badge {
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+.task-status-badge.overdue {
+  background-color: #ef4444;
+  color: white;
+}
+
+.task-status-badge.due-soon {
+  background-color: #f59e0b;
+  color: white;
+}
+
+.task-status-badge.completed {
+  background-color: #22c55e;
+  color: white;
+}

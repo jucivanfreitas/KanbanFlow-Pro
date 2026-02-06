@@ -1,0 +1,120 @@
+/* Estilos do KanbanBoard */
+
+.kanban-container {
+  width: 100%;
+  max-width: 100%;
+  padding: 1rem;
+}
+
+.kanban-header {
+  max-width: 42rem;
+  margin: 0 auto 2rem;
+  background-color: #f3f4f6;
+  padding: 1.5rem;
+  border-radius: 1rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.kanban-title {
+  font-size: 1.75rem;
+  font-weight: bold;
+  color: #1f2937;
+  margin: 0 0 1rem 0;
+  text-align: center;
+}
+
+.kanban-board {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  padding: 1rem;
+  min-height: 70vh;
+}
+
+.add-column-container {
+  min-width: 280px;
+  flex-shrink: 0;
+}
+
+.add-column-trigger {
+  width: 100%;
+  padding: 1rem;
+  background-color: rgba(99, 102, 241, 0.1);
+  border: 2px dashed #6366f1;
+  border-radius: 0.75rem;
+  color: #6366f1;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 0.95rem;
+}
+
+.add-column-trigger:hover {
+  background-color: rgba(99, 102, 241, 0.2);
+  border-color: #4f46e5;
+  transform: translateY(-2px);
+}
+
+.add-column-form {
+  background-color: white;
+  padding: 1rem;
+  border-radius: 0.75rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.add-column-input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 2px solid #e5e7eb;
+  border-radius: 0.5rem;
+  font-size: 0.95rem;
+  margin-bottom: 0.5rem;
+  transition: border-color 0.2s;
+}
+
+.add-column-input:focus {
+  outline: none;
+  border-color: #6366f1;
+}
+
+.add-column-buttons {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.add-column-btn {
+  flex: 1;
+  padding: 0.5rem;
+  border: none;
+  border-radius: 0.375rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.add-column-btn.confirm {
+  background-color: #10b981;
+  color: white;
+}
+
+.add-column-btn.confirm:hover {
+  background-color: #059669;
+  transform: translateY(-1px);
+}
+
+.add-column-btn.cancel {
+  background-color: #ef4444;
+  color: white;
+}
+
+.add-column-btn.cancel:hover {
+  background-color: #dc2626;
+  transform: translateY(-1px);
+}
+
+.loading-message {
+  text-align: center;
+  padding: 3rem;
+  font-size: 1.25rem;
+  color: #6b7280;
+}
