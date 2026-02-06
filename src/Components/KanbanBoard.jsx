@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import KanbanColumn from './KanbanColumn';
 import AddTask from './AddTask';
 import './KanbanBoard.css';
 
 function KanbanBoard() {
+  const navigate = useNavigate();
   const [columns, setColumns] = useState([]);
   const [tasks, setTasks] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -186,7 +188,16 @@ function KanbanBoard() {
     <div className="kanban-container">
       <div className="kanban-header">
         <h2 className="kanban-title">Kanban Board</h2>
-        <AddTask onAddTask={addTask} />
+        <div className="header-actions">
+          <button 
+            onClick={() => navigate('/help')}
+            className="btn-help"
+            title="Central de Ajuda"
+          >
+            ❓ Ajuda
+          </button>
+          <AddTask onAddTask={addTask} />
+        </div>
       </div>
 
       <div className="kanban-board">
