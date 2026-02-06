@@ -25,6 +25,7 @@
 - [x] README.md atualizado
 - [x] DEPLOY_GUIDE.md com guia completo de deploy
 - [x] ACESSO.md com informações de acesso
+- [x] Sanitização de segurança (IPs e credenciais removidos dos docs)
 - [x] Branches organizados (production + main)
 
 ---
@@ -49,14 +50,14 @@ jobs:
       - name: Deploy via SSH
         uses: appleboy/ssh-action@v1
         with:
-          host: 72.60.143.197
-          username: root
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_SSH_KEY }}
           script: |
             cd /var/www/kanbanflow-pro/temp
             git pull origin production
-            docker build -f Dockerfile.frontend -t jucivanfsantos/kanbanflow-frontend:latest --no-cache .
-            docker build -f Dockerfile.backend -t jucivanfsantos/kanbanflow-backend:latest --no-cache .
+            docker build -f Dockerfile.frontend -t ${{ secrets.DOCKER_USERNAME }}/kanbanflow-frontend:latest --no-cache .
+            docker build -f Dockerfile.backend -t ${{ secrets.DOCKER_USERNAME }}/kanbanflow-backend:latest --no-cache .
             cd /var/www/kanbanflow-pro
             docker rm -f kanbanflow-frontend kanbanflow-backend
             docker compose up -d
@@ -64,7 +65,11 @@ jobs:
 
 **Secrets necessários no GitHub:**
 
+- `VPS_HOST`: IP do servidor VPS
+- `VPS_USER`: Usuário SSH
 - `VPS_SSH_KEY`: Chave SSH privada para acesso ao VPS
+- `DOCKER_USERNAME`: Usuário do Docker Hub
+- `DOCKER_TOKEN`: Token de acesso do Docker Hub
 
 ### 2. 🗄️ Migrar para Banco de Dados
 

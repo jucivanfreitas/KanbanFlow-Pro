@@ -1,201 +1,561 @@
-﻿# 🎯 KanbanFlow Pro# 🎯 KanbanFlow Pro# KanbanFlow Pro
+﻿# KanbanFlow Pro# 🎯 KanbanFlow Pro# 🎯 KanbanFlow Pro# 🎯 KanbanFlow Pro# KanbanFlow Pro
 
-> **Sistema profissional de gerenciamento de tarefas em Kanban com interface moderna e intuitiva**> **Sistema profissional de gerenciamento de tarefas em Kanban com interface moderna e intuitiva**> **Sistema profissional de gerenciamento de tarefas em Kanban com interface moderna e intuitiva**
+> Sistema profissional de gerenciamento de tarefas em Kanban com interface moderna e intuitiva.> **Sistema profissional de gerenciamento de tarefas em Kanban com interface moderna e intuitiva**> **Sistema profissional de gerenciamento de tarefas em Kanban com interface moderna e intuitiva**> **Sistema profissional de gerenciamento de tarefas em Kanban com interface moderna e intuitiva**> **Sistema profissional de gerenciamento de tarefas em Kanban com interface moderna e intuitiva**
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
 [![React](https://img.shields.io/badge/React-19.2.0-61dafb.svg)](https://reactjs.org/)
 
-[![Node.js](https://img.shields.io/badge/Node.js-20-339933.svg)](https://nodejs.org/)[![React](https://img.shields.io/badge/React-19.2.0-61dafb.svg)](https://reactjs.org/)[![React](https://img.shields.io/badge/React-19.2.0-61dafb.svg)](https://reactjs.org/)
+[![Node.js](https://img.shields.io/badge/Node.js-20-339933.svg)](https://nodejs.org/)[![React](https://img.shields.io/badge/React-19.2.0-61dafb.svg)](https://reactjs.org/)
 
 [![Vite](https://img.shields.io/badge/Vite-5.4.21-646cff.svg)](https://vitejs.dev/)
 
-[![Docker](https://img.shields.io/badge/Docker-Ready-2496ED.svg)](https://www.docker.com/)[![Node.js](https://img.shields.io/badge/Node.js-21.3.0-339933.svg)](https://nodejs.org/)[![Node.js](https://img.shields.io/badge/Node.js-21.3.0-339933.svg)](https://nodejs.org/)
+[![Docker](https://img.shields.io/badge/Docker-Ready-2496ED.svg)](https://www.docker.com/)[![Node.js](https://img.shields.io/badge/Node.js-20-339933.svg)](https://nodejs.org/)[![React](https://img.shields.io/badge/React-19.2.0-61dafb.svg)](https://reactjs.org/)
 
----[![Vite](https://img.shields.io/badge/Vite-5.4.21-646cff.svg)](https://vitejs.dev/)[![Vite](https://img.shields.io/badge/Vite-5.4.21-646cff.svg)](https://vitejs.dev/)
+---[![Vite](https://img.shields.io/badge/Vite-5.4.21-646cff.svg)](https://vitejs.dev/)
 
-## 🌐 Produção**KanbanFlow Pro** é uma solução completa e gratuita para gerenciamento ágil de tarefas, oferecendo um quadro Kanban totalmente personalizável com recursos avançados de rastreamento e organização.**KanbanFlow Pro** é uma solução completa e gratuita para gerenciamento ágil de tarefas, oferecendo um quadro Kanban totalmente personalizável com recursos avançados de rastreamento e organização.
+## Producao[![Docker](https://img.shields.io/badge/Docker-Ready-2496ED.svg)](https://www.docker.com/)[![Node.js](https://img.shields.io/badge/Node.js-20-339933.svg)](https://nodejs.org/)[![React](https://img.shields.io/badge/React-19.2.0-61dafb.svg)](https://reactjs.org/)[![React](https://img.shields.io/badge/React-19.2.0-61dafb.svg)](https://reactjs.org/)
 
-| Serviço | URL |---
+| Servico | URL |---[![Vite](https://img.shields.io/badge/Vite-5.4.21-646cff.svg)](https://vitejs.dev/)
 
 |---------|-----|
 
-| **Frontend** | https://kanbanflow.visiochat.cloud |## 🌟 Características Principais## Características Principais
+| **Frontend** | https://kanbanflow.visiochat.cloud |## 🌐 Produção[![Docker](https://img.shields.io/badge/Docker-Ready-2496ED.svg)](https://www.docker.com/)[![Node.js](https://img.shields.io/badge/Node.js-21.3.0-339933.svg)](https://nodejs.org/)[![Node.js](https://img.shields.io/badge/Node.js-21.3.0-339933.svg)](https://nodejs.org/)
 
 | **Backend API** | https://kanbanapi.visiochat.cloud |
 
-| **Health Check** | https://kanbanapi.visiochat.cloud/api/health |### 📊 **Quadro Kanban Dinâmico**### **Quadro Kanban Dinâmico**
+| **Health Check** | https://kanbanapi.visiochat.cloud/api/health || Serviço | URL |---[![Vite](https://img.shields.io/badge/Vite-5.4.21-646cff.svg)](https://vitejs.dev/)[![Vite](https://img.shields.io/badge/Vite-5.4.21-646cff.svg)](https://vitejs.dev/)
 
----- **Colunas Personalizáveis:** Crie, edite e delete colunas conforme seu fluxo de trabalho- **Colunas Personalizáveis:** Crie, edite e delete colunas conforme seu fluxo de trabalho
+---|---------|-----|
 
-## 🌟 Características Principais- **Drag & Drop:** Arraste tarefas entre colunas de forma intuitiva- **Drag & Drop:** Arraste tarefas entre colunas de forma intuitiva
+## Caracteristicas Principais| **Frontend** | https://kanbanflow.visiochat.cloud |## 🌐 Produção**KanbanFlow Pro** é uma solução completa e gratuita para gerenciamento ágil de tarefas, oferecendo um quadro Kanban totalmente personalizável com recursos avançados de rastreamento e organização.**KanbanFlow Pro** é uma solução completa e gratuita para gerenciamento ágil de tarefas, oferecendo um quadro Kanban totalmente personalizável com recursos avançados de rastreamento e organização.
 
-### 📊 Quadro Kanban Dinâmico- **Fluxo Flexível:** Backlog, In Progress, Done e muito mais - você decide!- **Fluxo Flexível:** Backlog, In Progress, Done e muito mais - você decide!
+### Quadro Kanban Dinamico| **Backend API** | https://kanbanapi.visiochat.cloud |
+
+- **Colunas Personalizaveis:** Crie, edite e delete colunas conforme seu fluxo de trabalho
+
+- **Movimentacao de Tarefas:** Mova tarefas entre colunas com cliques| **Health Check** | https://kanbanapi.visiochat.cloud/api/health || Serviço | URL |---
+
+- **Fluxo Flexivel:** Backlog, In Progress, Done e muito mais
+
+---|---------|-----|
+
+### Gerenciamento de Tarefas
+
+- **Criacao Rapida:** Adicione tarefas com titulo, descricao e prioridade## 🌟 Características Principais| **Frontend** | https://kanbanflow.visiochat.cloud |## 🌟 Características Principais## Características Principais
+
+- **Edicao Inline:** Edite tarefas diretamente no quadro
+
+- **Exclusao Segura:** Confirmacao antes de remover tarefas### 📊 Quadro Kanban Dinâmico| **Backend API** | https://kanbanapi.visiochat.cloud |
+
+- **Detalhes Expandidos:** Visualize detalhes completos de cada tarefa
 
 - **Colunas Personalizáveis:** Crie, edite e delete colunas conforme seu fluxo de trabalho
 
-- **Movimentação de Tarefas:** Mova tarefas entre colunas com cliques### 📅 **Sistema de Datas Inteligente**### **Sistema de Datas Inteligente**
+### Prioridades Visuais
+
+- **Alta** (vermelho), **Media** (amarelo), **Baixa** (verde)- **Movimentação de Tarefas:** Mova tarefas entre colunas com cliques| **Health Check** | https://kanbanapi.visiochat.cloud/api/health |### 📊 **Quadro Kanban Dinâmico**### **Quadro Kanban Dinâmico**
+
+- Indicadores visuais claros para organizacao
 
 - **Fluxo Flexível:** Backlog, In Progress, Done e muito mais - você decide!
 
-- **Data de Criação:** Registro automático quando a tarefa é criada- **Data de Criação:** Registro automático quando a tarefa é criada
+### Persistencia de Dados
 
-### 📅 Sistema de Datas Inteligente
+- Backend Express com API REST---- **Colunas Personalizáveis:** Crie, edite e delete colunas conforme seu fluxo de trabalho- **Colunas Personalizáveis:** Crie, edite e delete colunas conforme seu fluxo de trabalho
 
-- **Data de Criação:** Registro automático quando a tarefa é criada- **Data de Previsão:** Defina prazos para suas entregas- **Data de Previsão:** Defina prazos para suas entregas
+- Armazenamento em JSON (server/data/tasks.json)
 
-- **Data de Previsão:** Defina prazos para suas entregas
+- Volume Docker para persistencia em producao### 📅 Sistema de Datas Inteligente
 
-- **Data de Conclusão:** Marcação automática ao completar tarefas- **Data de Conclusão:** Marcação automática ao completar tarefas- **Data de Conclusão:** Marcação automática ao completar tarefas
+---- **Data de Criação:** Registro automático quando a tarefa é criada## 🌟 Características Principais- **Drag & Drop:** Arraste tarefas entre colunas de forma intuitiva- **Drag & Drop:** Arraste tarefas entre colunas de forma intuitiva
 
-- **Indicadores Visuais:**
-  - 🔴 Vermelho: Tarefa atrasada- **Indicadores Visuais:** Cores que mudam baseadas no status:- **Indicadores Visuais:** Cores que mudam baseadas no status:
+## Tech Stack- **Data de Previsão:** Defina prazos para suas entregas
 
-  - 🟠 Laranja: Vencimento próximo (2 dias) - 🔴 **Vermelho:** Tarefa atrasada - **Vermelho:** Tarefa atrasada
+### Frontend- **Data de Conclusão:** Marcação automática ao completar tarefas### 📊 Quadro Kanban Dinâmico- **Fluxo Flexível:** Backlog, In Progress, Done e muito mais - você decide!- **Fluxo Flexível:** Backlog, In Progress, Done e muito mais - você decide!
 
-  - 🔵 Azul: No prazo
+- **React 19.2.0** - Biblioteca de UI
 
-  - 🟢 Verde: Concluída - 🟠 **Laranja:** Vencimento próximo (2 dias) - **Laranja:** Vencimento próximo (2 dias)
+- **Vite 5.4.21** - Build tool e dev server- **Indicadores Visuais:**
 
-### 📝 Detalhes Completos de Tarefas - 🔵 **Azul:** No prazo - **Azul:** No prazo
+- **React Router DOM 7** - Navegacao SPA - 🔴 Vermelho: Tarefa atrasada- **Colunas Personalizáveis:** Crie, edite e delete colunas conforme seu fluxo de trabalho
 
-- Página dedicada para cada tarefa com editor completo
+- **Lucide React** - Icones modernos
 
-- Campos de título, descrição detalhada e datas - 🟢 **Verde:** Concluída - **Verde:** Concluída
+- **CSS Modules** - Estilizacao isolada - 🟠 Laranja: Vencimento próximo (2 dias)
 
-- Mova tarefas entre colunas diretamente da tela de detalhes
+### Backend - 🔵 Azul: No prazo- **Movimentação de Tarefas:** Mova tarefas entre colunas com cliques### 📅 **Sistema de Datas Inteligente**### **Sistema de Datas Inteligente**
 
-- Marcar como completa/reabrir com um clique### 📝 **Detalhes Completos de Tarefas**### **Detalhes Completos de Tarefas**
+- **Node.js 20** - Runtime JavaScript
 
-### 🎨 Interface Moderna- Página dedicada para cada tarefa com editor completo- Página dedicada para cada tarefa com editor completo
+- **Express 4** - Framework HTTP - 🟢 Verde: Concluída
 
-- Design responsivo para desktop e mobile
+- **CORS** - Cross-Origin Resource Sharing
 
-- Gradientes e efeitos visuais elegantes- Campos de título, descrição detalhada e datas- Campos de título, descrição detalhada e datas
+- **UUID** - Geracao de IDs unicos- **Fluxo Flexível:** Backlog, In Progress, Done e muito mais - você decide!
 
-- Navegação fluida com React Router
+### Infraestrutura### 📝 Detalhes Completos de Tarefas
 
-- Mova tarefas entre colunas diretamente da tela de detalhes- Mova tarefas entre colunas diretamente da tela de detalhes
+- **Docker** - Containerizacao (multi-stage build)
 
----
+- **Nginx** - Servidor web para frontend (Alpine)- Página dedicada para cada tarefa com editor completo- **Data de Criação:** Registro automático quando a tarefa é criada- **Data de Criação:** Registro automático quando a tarefa é criada
 
-- Marcar como completa/reabrir com um clique- Marcar como completa/reabrir com um clique
+- **Traefik** - Proxy reverso com SSL automatico (Let's Encrypt)
 
-## 🚀 Tecnologias
+- **Docker Compose** - Orquestracao de containers- Campos de título, descrição detalhada e datas
 
-- Exclusão segura com confirmação- Exclusão segura com confirmação
+---- Mova tarefas entre colunas diretamente da tela de detalhes### 📅 Sistema de Datas Inteligente
 
-| Camada | Tecnologia | Versão |
+## Estrutura do Projeto- Marcar como completa/reabrir com um clique
 
-|--------|-----------|--------|### 🎨 **Interface Moderna**### **Interface Moderna**
+````- Exclusão segura com confirmação- **Data de Criação:** Registro automático quando a tarefa é criada- **Data de Previsão:** Defina prazos para suas entregas- **Data de Previsão:** Defina prazos para suas entregas
 
-| **Frontend** | React | 19.2.0 |
+KanbanFlow-Pro/
 
-| **Build Tool** | Vite | 5.4.21 |- Design responsivo para desktop e mobile- Design responsivo para desktop e mobile
+├── src/### 🎨 Interface Moderna- **Data de Previsão:** Defina prazos para suas entregas
 
-| **Roteamento** | React Router DOM | 7.x |
+│   ├── Components/
 
-| **CSS** | TailwindCSS + CSS Custom | 3.x |- Gradientes e efeitos visuais elegantes- Gradientes e efeitos visuais elegantes
+│   │   ├── KanbanBoard.jsx    # Componente principal do quadro- Design responsivo para desktop e mobile
 
-| **Backend** | Node.js + Express | 20.x |
+│   │   ├── KanbanBoard.css
 
-| **Persistência** | JSON File Storage | - |- Experiência de usuário otimizada- Experiência de usuário otimizada
+│   │   ├── Tasks.jsx          # Lista e gerenciamento de tarefas- Gradientes e efeitos visuais elegantes- **Data de Conclusão:** Marcação automática ao completar tarefas- **Data de Conclusão:** Marcação automática ao completar tarefas- **Data de Conclusão:** Marcação automática ao completar tarefas
 
-| **Container** | Docker + Docker Compose | - |
+│   │   ├── Tasks.css
 
-| **Proxy Reverso** | Traefik | 2.x |- Navegação fluida com React Router- Navegação fluida com React Router
+│   │   ├── TaskDetails.jsx    # Detalhes expandidos da tarefa- Navegação fluida com React Router
 
-| **SSL** | Let's Encrypt (automático) | - |
+│   │   ├── TaskDetails.css
 
----
+│   │   ├── Help.jsx           # Pagina de ajuda- **Indicadores Visuais:**
 
----
+│   │   └── Help.css
 
-## 🚀 Tecnologias Utilizadas## Tecnologias Utilizadas
+│   ├── App.jsx--- - 🔴 Vermelho: Tarefa atrasada- **Indicadores Visuais:** Cores que mudam baseadas no status:- **Indicadores Visuais:** Cores que mudam baseadas no status:
 
-## 📁 Estrutura do Projeto
+│   ├── App.css
 
-| Camada | Tecnologia | Versão || Camada | Tecnologia | Versão |
-
-`````
-
-KanbanFlow-Pro/| ---------------- | -------------------- | ------ || ---------------- | -------------------- | ------ |
-
-├── src/                          # Código fonte React
-
-│   ├── Components/| **Frontend** | React | 19.2.0 || **Frontend** | React | 19.2.0 |
-
-│   │   ├── KanbanBoard.jsx       # Quadro Kanban principal
-
-│   │   ├── KanbanColumn.jsx      # Coluna do Kanban| **Build Tool** | Vite | 5.4.21 || **Build Tool** | Vite | 5.4.21 |
-
-│   │   ├── AddTask.jsx           # Componente de adicionar tarefa
-
-│   │   ├── Tasks.jsx             # Lista de tarefas| **Roteamento** | React Router DOM | 7.x || **Roteamento** | React Router DOM | 7.x |
-
-│   │   ├── TaskDetails.jsx       # Detalhes da tarefa
-
-│   │   └── *.css                 # Estilos dos componentes| **Backend** | Node.js + Express | - || **Backend** | Node.js + Express | - |
-
-│   ├── App.jsx                   # Componente raiz com rotas
-
-│   └── main.jsx                  # Entry point| **Persistência** | JSON File Storage | - || **Persistência** | JSON File Storage | - |
+│   └── main.jsx## 🚀 Tecnologias - 🟠 Laranja: Vencimento próximo (2 dias) - 🔴 **Vermelho:** Tarefa atrasada - **Vermelho:** Tarefa atrasada
 
 ├── server/
 
-│   ├── server.js                 # API Express (CORS, Health Check)| **API** | RESTful Architecture | - || **API** | RESTful Architecture | - |
+│   └── server.js              # API Express (REST)| Camada | Tecnologia | Versão | - 🔵 Azul: No prazo
 
-│   └── data/
+├── Dockerfile.frontend         # Multi-stage: Node build + Nginx
 
-│       └── tasks.json            # Persistência de dados (dev)---
+├── Dockerfile.backend          # Node.js Alpine|--------|-----------|--------|
 
-├── Dockerfile.frontend           # Multi-stage: Node build + Nginx
+├── docker-compose.yml          # Producao com Traefik
 
-├── Dockerfile.backend            # Node.js Alpine## 📋 Requisitos do Sistema## Requisitos do Sistema
+├── nginx.conf                  # Configuracao Nginx otimizada| **Frontend** | React | 19.2.0 | - 🟢 Verde: Concluída - 🟠 **Laranja:** Vencimento próximo (2 dias) - **Laranja:** Vencimento próximo (2 dias)
 
-├── docker-compose.yml            # Deploy com Traefik labels
+├── .env.example                # Variaveis de ambiente (template)
 
-├── nginx.conf                    # Config Nginx para SPAAntes de instalar, certifique-se de ter:Antes de instalar, certifique-se de ter:
+├── .github/workflows/| **Build Tool** | Vite | 5.4.21 |
 
-├── .env.production               # VITE_API_URL para produção
+│   └── deploy.yml              # CI/CD GitHub Actions
 
-├── .github/workflows/deploy.yml  # CI/CD GitHub Actions- **Node.js:** versão 20.0.0 ou superior ([Download aqui](https://nodejs.org/))- **Node.js:** versão 20.0.0 ou superior ([Download aqui](https://nodejs.org/))
+├── DEPLOY_GUIDE.md             # Guia completo de deploy| **Roteamento** | React Router DOM | 7.x |### 📝 Detalhes Completos de Tarefas - 🔵 **Azul:** No prazo - **Azul:** No prazo
+
+├── PROXIMOS_PASSOS.md          # Roadmap do projeto
+
+├── ACESSO.md                   # Informacoes de acesso| **Backend** | Node.js + Express | 20.x |
 
 └── package.json
 
-```- **npm:** versão 10.0.0 ou superior (incluído com Node.js)- **npm:** versão 10.0.0 ou superior (incluído com Node.js)
+```| **Persistência** | JSON File Storage | - |- Página dedicada para cada tarefa com editor completo
 
 
 
----- **Sistema Operacional:** Windows, macOS ou Linux- **Sistema Operacional:** Windows, macOS ou Linux
+---| **Container** | Docker + Docker Compose | - |
 
 
 
-## 🛠️ Desenvolvimento Local- **Navegador:** Chrome, Firefox, Edge ou Safari (versões atuais)- **Navegador:** Chrome, Firefox, Edge ou Safari (versões atuais)
+## Instalacao Local| **Proxy Reverso** | Traefik | 2.x |- Campos de título, descrição detalhada e datas - 🟢 **Verde:** Concluída - **Verde:** Concluída
 
 
 
-### Pré-requisitos---
+### Pre-requisitos| **SSL** | Let's Encrypt (automático) | - |
 
 - Node.js 20+
 
-- npm 10+## 🔧 Instalação e Configuração## Instalação e Configuração
+- npm 9+- Mova tarefas entre colunas diretamente da tela de detalhes
 
 
 
-### Instalação### 1️⃣ Clone o Repositório### 1 Clone o Repositório
+### Passos---
 
 
 
-```bash`bash`bash
+```bash- Marcar como completa/reabrir com um clique### 📝 **Detalhes Completos de Tarefas**### **Detalhes Completos de Tarefas**
 
-# Clonar repositório
+# 1. Clonar repositorio
 
-git clone https://github.com/jucivanfreitas/KanbanFlow-Pro.gitgit clone https://github.com/jucivanfreitas/KanbanFlow-Pro.gitgit clone https://github.com/jucivanfreitas/KanbanFlow-Pro.git
+git clone https://github.com/jucivanfreitas/KanbanFlow-Pro.git## 📁 Estrutura do Projeto
 
 cd KanbanFlow-Pro
 
-cd KanbanFlow-Procd KanbanFlow-Pro
+### 🎨 Interface Moderna- Página dedicada para cada tarefa com editor completo- Página dedicada para cada tarefa com editor completo
+
+# 2. Instalar dependencias
+
+npm install```
+
+
+
+# 3. Configurar variaveis de ambienteKanbanFlow-Pro/- Design responsivo para desktop e mobile
+
+cp .env.example .env
+
+├── src/                          # Código fonte React
+
+# 4. Iniciar backend (Terminal 1)
+
+npm run server│   ├── Components/- Gradientes e efeitos visuais elegantes- Campos de título, descrição detalhada e datas- Campos de título, descrição detalhada e datas
+
+
+
+# 5. Iniciar frontend (Terminal 2)│   │   ├── KanbanBoard.jsx       # Quadro Kanban principal
+
+npm run dev
+
+```│   │   ├── KanbanColumn.jsx      # Coluna do Kanban- Navegação fluida com React Router
+
+
+
+Acesse: http://localhost:5173│   │   ├── AddTask.jsx           # Componente de adicionar tarefa
+
+
+
+---│   │   ├── Tasks.jsx             # Lista de tarefas- Mova tarefas entre colunas diretamente da tela de detalhes- Mova tarefas entre colunas diretamente da tela de detalhes
+
+
+
+## API Endpoints│   │   ├── TaskDetails.jsx       # Detalhes da tarefa
+
+
+
+| Metodo | Endpoint | Descricao |│   │   ├── Help.jsx              # Página de ajuda---
+
+|--------|----------|-----------|
+
+| GET | `/api/health` | Health check |│   │   └── *.css                 # Estilos dos componentes
+
+| GET | `/api/columns` | Listar colunas |
+
+| POST | `/api/columns` | Criar coluna |│   ├── App.jsx                   # Componente raiz com rotas- Marcar como completa/reabrir com um clique- Marcar como completa/reabrir com um clique
+
+| PUT | `/api/columns/:id` | Atualizar coluna |
+
+| DELETE | `/api/columns/:id` | Deletar coluna |│   └── main.jsx                  # Entry point
+
+| GET | `/api/tasks` | Listar tarefas |
+
+| POST | `/api/tasks` | Criar tarefa |├── server/## 🚀 Tecnologias
+
+| PUT | `/api/tasks/:id` | Atualizar tarefa |
+
+| DELETE | `/api/tasks/:id` | Deletar tarefa |│   ├── server.js                 # API Express (CORS, Health Check)
+
+
+
+---│   └── data/- Exclusão segura com confirmação- Exclusão segura com confirmação
+
+
+
+## Deploy em Producao│       └── tasks.json            # Persistência de dados (dev)
+
+
+
+O deploy usa **Docker Compose + Traefik** com SSL automatico via Let's Encrypt.├── Dockerfile.frontend           # Multi-stage: Node build + Nginx| Camada | Tecnologia | Versão |
+
+
+
+Consulte o [DEPLOY_GUIDE.md](DEPLOY_GUIDE.md) para instrucoes completas.├── Dockerfile.backend            # Node.js Alpine
+
+
+
+### Resumo rapido├── docker-compose.yml            # Deploy com Traefik labels|--------|-----------|--------|### 🎨 **Interface Moderna**### **Interface Moderna**
+
+
+
+```bash├── nginx.conf                    # Config Nginx para SPA
+
+# No VPS, dentro do diretorio do projeto:
+
+├── .env.example                  # Template de variáveis de ambiente| **Frontend** | React | 19.2.0 |
+
+# Build das imagens
+
+docker build -f Dockerfile.frontend -t <dockerhub-user>/kanbanflow-frontend:latest .├── .github/workflows/deploy.yml  # CI/CD GitHub Actions
+
+docker build -f Dockerfile.backend -t <dockerhub-user>/kanbanflow-backend:latest .
+
+└── package.json| **Build Tool** | Vite | 5.4.21 |- Design responsivo para desktop e mobile- Design responsivo para desktop e mobile
+
+# Iniciar containers
+
+docker compose up -d```
+
+
+
+# Verificar status| **Roteamento** | React Router DOM | 7.x |
+
+docker ps --filter name=kanbanflow
+
+```---
+
+
+
+### CI/CD| **CSS** | TailwindCSS + CSS Custom | 3.x |- Gradientes e efeitos visuais elegantes- Gradientes e efeitos visuais elegantes
+
+
+
+O arquivo `.github/workflows/deploy.yml` automatiza o deploy quando a branch `production` e atualizada. Configure os seguintes **GitHub Secrets**:## 🛠️ Desenvolvimento Local
+
+
+
+| Secret | Descricao || **Backend** | Node.js + Express | 20.x |
+
+|--------|-----------|
+
+| `DOCKER_USERNAME` | Usuario do Docker Hub |### Pré-requisitos
+
+| `DOCKER_TOKEN` | Token de acesso do Docker Hub |
+
+| `VPS_HOST` | IP do servidor VPS |- Node.js 20+| **Persistência** | JSON File Storage | - |- Experiência de usuário otimizada- Experiência de usuário otimizada
+
+| `VPS_USER` | Usuario SSH do VPS |
+
+| `VPS_SSH_KEY` | Chave SSH privada |- npm 10+
+
+
+
+---| **Container** | Docker + Docker Compose | - |
+
+
+
+## Variaveis de Ambiente### Instalação
+
+
+
+Consulte `.env.example` para todas as variaveis disponiveis:| **Proxy Reverso** | Traefik | 2.x |- Navegação fluida com React Router- Navegação fluida com React Router
+
+
+
+| Variavel | Descricao | Padrao |```bash
+
+|----------|-----------|--------|
+
+| `PORT` | Porta do backend | 3001 |# Clonar repositório| **SSL** | Let's Encrypt (automático) | - |
+
+| `NODE_ENV` | Ambiente de execucao | development |
+
+| `FRONTEND_URL` | URL do frontend (CORS) | http://localhost:5173 |git clone https://github.com/jucivanfreitas/KanbanFlow-Pro.git
+
+| `VITE_API_URL` | URL da API backend | http://localhost:3001 |
+
+| `DATA_FILE_PATH` | Caminho do arquivo de dados | ./server/data/tasks.json |cd KanbanFlow-Pro---
+
+
+
+---
+
+
+
+## Branches# Instalar dependências---
+
+
+
+| Branch | Descricao |npm install
+
+|--------|-----------|
+
+| `main` | Branch estavel |## 🚀 Tecnologias Utilizadas## Tecnologias Utilizadas
+
+| `production` | Branch de deploy (trigger CI/CD) |
+
+# Copiar variáveis de ambiente
+
+### Workflow
+
+cp .env.example .env## 📁 Estrutura do Projeto
+
+````
+
+main (estavel)```
+
+└── production (deploy automatico via CI/CD)
+
+        └── feature/* (desenvolvimento)| Camada | Tecnologia | Versão || Camada | Tecnologia | Versão |
+
+```
+
+### Executar
+
+---
+
+```
+
+## Documentacao
+
+```bash
+
+- [DEPLOY_GUIDE.md](DEPLOY_GUIDE.md) - Guia completo de deploy
+
+- [PROXIMOS_PASSOS.md](PROXIMOS_PASSOS.md) - Roadmap e proximos passos# Iniciar backend (terminal 1)KanbanFlow-Pro/| ---------------- | -------------------- | ------ || ---------------- | -------------------- | ------ |
+
+- [ACESSO.md](ACESSO.md) - Informacoes de acesso a producao
+
+npm run server
+
+---
+
+├── src/                          # Código fonte React
+
+## Licenca
+
+# Iniciar frontend (terminal 2)
+
+Este projeto esta licenciado sob a [MIT License](LICENSE).
+
+npm run dev│   ├── Components/| **Frontend** | React | 19.2.0 || **Frontend** | React | 19.2.0 |
+
+Copyright (c) 2026 - KanbanFlow Pro
+
+```
+
+│ │ ├── KanbanBoard.jsx # Quadro Kanban principal
+
+### Acessar
+
+- **Frontend:** http://localhost:5173│ │ ├── KanbanColumn.jsx # Coluna do Kanban| **Build Tool** | Vite | 5.4.21 || **Build Tool** | Vite | 5.4.21 |
+
+- **Backend API:** http://localhost:3001
+
+- **Health Check:** http://localhost:3001/api/health│ │ ├── AddTask.jsx # Componente de adicionar tarefa
+
+---│ │ ├── Tasks.jsx # Lista de tarefas| **Roteamento** | React Router DOM | 7.x || **Roteamento** | React Router DOM | 7.x |
+
+## 🐳 Deploy em Produção│ │ ├── TaskDetails.jsx # Detalhes da tarefa
+
+O deploy é feito via **Docker Compose** com **Traefik** como proxy reverso e SSL automático via Let's Encrypt.│ │ └── \*.css # Estilos dos componentes| **Backend** | Node.js + Express | - || **Backend** | Node.js + Express | - |
+
+> ⚠️ Consulte o [DEPLOY_GUIDE.md](DEPLOY_GUIDE.md) para instruções detalhadas.│ ├── App.jsx # Componente raiz com rotas
+
+### Resumo rápido│ └── main.jsx # Entry point| **Persistência** | JSON File Storage | - || **Persistência** | JSON File Storage | - |
+
+`````bash├── server/
+
+# No VPS, dentro do diretório do projeto:
+
+│   ├── server.js                 # API Express (CORS, Health Check)| **API** | RESTful Architecture | - || **API** | RESTful Architecture | - |
+
+# Build das imagens
+
+docker build -f Dockerfile.frontend -t <dockerhub-user>/kanbanflow-frontend:latest .│   └── data/
+
+docker build -f Dockerfile.backend -t <dockerhub-user>/kanbanflow-backend:latest .
+
+│       └── tasks.json            # Persistência de dados (dev)---
+
+# Iniciar containers
+
+docker compose up -d├── Dockerfile.frontend           # Multi-stage: Node build + Nginx
+
+
+
+# Verificar status├── Dockerfile.backend            # Node.js Alpine## 📋 Requisitos do Sistema## Requisitos do Sistema
+
+docker ps --filter name=kanbanflow
+
+```├── docker-compose.yml            # Deploy com Traefik labels
+
+
+
+---├── nginx.conf                    # Config Nginx para SPAAntes de instalar, certifique-se de ter:Antes de instalar, certifique-se de ter:
+
+
+
+## 📡 API Endpoints├── .env.production               # VITE_API_URL para produção
+
+
+
+| Método | Endpoint | Descrição |├── .github/workflows/deploy.yml  # CI/CD GitHub Actions- **Node.js:** versão 20.0.0 ou superior ([Download aqui](https://nodejs.org/))- **Node.js:** versão 20.0.0 ou superior ([Download aqui](https://nodejs.org/))
+
+|--------|----------|-----------|
+
+| GET | `/api/health` | Health check |└── package.json
+
+| GET | `/api/columns` | Listar colunas |
+
+| POST | `/api/columns` | Criar coluna |```- **npm:** versão 10.0.0 ou superior (incluído com Node.js)- **npm:** versão 10.0.0 ou superior (incluído com Node.js)
+
+| PUT | `/api/columns/:id` | Atualizar coluna |
+
+| DELETE | `/api/columns/:id` | Deletar coluna |
+
+| GET | `/api/tasks` | Listar tarefas |
+
+| POST | `/api/tasks` | Criar tarefa |---- **Sistema Operacional:** Windows, macOS ou Linux- **Sistema Operacional:** Windows, macOS ou Linux
+
+| PUT | `/api/tasks/:id` | Atualizar tarefa |
+
+| DELETE | `/api/tasks/:id` | Deletar tarefa |
+
+
+
+---## 🛠️ Desenvolvimento Local- **Navegador:** Chrome, Firefox, Edge ou Safari (versões atuais)- **Navegador:** Chrome, Firefox, Edge ou Safari (versões atuais)
+
+
+
+## 🔀 Branches
+
+
+
+| Branch | Descrição |### Pré-requisitos---
+
+|--------|-----------|
+
+| `main` | Branch estável, sempre sincronizado com production |- Node.js 20+
+
+| `production` | Branch de trabalho, deploy em produção |
+
+- npm 10+## 🔧 Instalação e Configuração## Instalação e Configuração
+
+---
+
+
+
+## 📄 Documentação
+
+### Instalação### 1️⃣ Clone o Repositório### 1 Clone o Repositório
+
+- [DEPLOY_GUIDE.md](DEPLOY_GUIDE.md) - Guia completo de deploy
+
+- [PROXIMOS_PASSOS.md](PROXIMOS_PASSOS.md) - Roadmap e próximos passos
+
+- [ACESSO.md](ACESSO.md) - Informações de acesso à produção
+
+- [KANBAN_GUIDE.md](KANBAN_GUIDE.md) - Guia de uso do Kanban```bash`bash`bash
+
+
+
+---# Clonar repositório
+
+
+
+## 📝 Licençagit clone https://github.com/jucivanfreitas/KanbanFlow-Pro.gitgit clone https://github.com/jucivanfreitas/KanbanFlow-Pro.gitgit clone https://github.com/jucivanfreitas/KanbanFlow-Pro.git
+
+
+
+Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para detalhes.cd KanbanFlow-Pro
+
+
+
+Copyright (c) 2026 Jucivan Freitas - Datavisiocd KanbanFlow-Procd KanbanFlow-Pro
+
 
 # Instalar dependências
 

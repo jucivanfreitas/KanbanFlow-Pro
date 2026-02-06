@@ -2,12 +2,15 @@
 
 ## 📋 Pré-requisitos
 
-- ✅ VPS com Docker instalado (72.60.143.197)
-- ✅ Traefik rodando como proxy reverso na rede `traefik_public`
-- ✅ Domínios DNS apontando para o VPS:
-  - `kanbanflow.visiochat.cloud` → 72.60.143.197
-  - `kanbanapi.visiochat.cloud` → 72.60.143.197
-- ✅ Conta Docker Hub: `jucivanfsantos`
+- VPS com Docker instalado
+- Traefik rodando como proxy reverso na rede `traefik_public`
+- Domínios DNS apontando para o IP do VPS:
+  - `kanbanflow.visiochat.cloud` → `<VPS_IP>`
+  - `kanbanapi.visiochat.cloud` → `<VPS_IP>`
+- Conta Docker Hub (ex: `<dockerhub-user>`)
+
+> ⚠️ **Segurança:** Nunca commite IPs, senhas ou chaves SSH no repositório.
+> Configure informações sensíveis via variáveis de ambiente ou GitHub Secrets.
 
 ---
 
@@ -31,26 +34,12 @@ Internet
 
 ---
 
-## 🔑 Informações de Acesso
-
-| Item              | Valor                              |
-| ----------------- | ---------------------------------- |
-| **VPS IP**        | 72.60.143.197                      |
-| **SSH**           | `ssh root@72.60.143.197`           |
-| **Docker Hub**    | jucivanfsantos                     |
-| **Frontend URL**  | https://kanbanflow.visiochat.cloud |
-| **Backend URL**   | https://kanbanapi.visiochat.cloud  |
-| **Diretório VPS** | /var/www/kanbanflow-pro/           |
-| **Código fonte**  | /var/www/kanbanflow-pro/temp/      |
-
----
-
 ## 📦 Primeiro Deploy (Manual)
 
 ### 1. Conectar no VPS
 
 ```bash
-ssh root@72.60.143.197
+ssh <user>@<VPS_IP>
 ```
 
 ### 2. Preparar diretórios
@@ -71,10 +60,10 @@ git checkout production
 cd /var/www/kanbanflow-pro/temp
 
 # Build frontend (multi-stage: node build + nginx)
-docker build -f Dockerfile.frontend -t jucivanfsantos/kanbanflow-frontend:latest .
+docker build -f Dockerfile.frontend -t <dockerhub-user>/kanbanflow-frontend:latest .
 
 # Build backend
-docker build -f Dockerfile.backend -t jucivanfsantos/kanbanflow-backend:latest .
+docker build -f Dockerfile.backend -t <dockerhub-user>/kanbanflow-backend:latest .
 ```
 
 ### 4. Copiar docker-compose e iniciar
@@ -109,15 +98,15 @@ Quando fizer alterações no código e quiser atualizar a produção:
 ### Via SSH direto
 
 ```bash
-ssh root@72.60.143.197
+ssh <user>@<VPS_IP>
 
 # Atualizar código
 cd /var/www/kanbanflow-pro/temp
 git pull origin production
 
 # Rebuild das imagens
-docker build -f Dockerfile.frontend -t jucivanfsantos/kanbanflow-frontend:latest --no-cache .
-docker build -f Dockerfile.backend -t jucivanfsantos/kanbanflow-backend:latest --no-cache .
+docker build -f Dockerfile.frontend -t <dockerhub-user>/kanbanflow-frontend:latest --no-cache .
+docker build -f Dockerfile.backend -t <dockerhub-user>/kanbanflow-backend:latest --no-cache .
 
 # Recriar containers
 cd /var/www/kanbanflow-pro
@@ -129,11 +118,14 @@ docker compose up -d
 
 ```bash
 # Enviar arquivos alterados
-scp docker-compose.yml root@72.60.143.197:/var/www/kanbanflow-pro/
-scp -r src/ server/ Dockerfile.* nginx.conf .env.production root@72.60.143.197:/var/www/kanbanflow-pro/temp/
+scp docker-compose.yml <user>@<VPS_IP>:/var/www/kanbanflow-pro/
+scp -r src/ server/ Dockerfile.* nginx.conf .env.production <user>@<VPS_IP>:/var/www/kanbanflow-pro/temp/
 
 # Rebuild no VPS
-ssh root@72.60.143.197 "cd /var/www/kanbanflow-pro/temp && docker build -f Dockerfile.frontend -t jucivanfsantos/kanbanflow-frontend:latest --no-cache . && docker build -f Dockerfile.backend -t jucivanfsantos/kanbanflow-backend:latest --no-cache . && cd .. && docker rm -f kanbanflow-frontend kanbanflow-backend && docker compose up -d"
+ssh <user>@<VPS_IP> "cd /var/www/kanbanflow-pro/temp && \
+  docker build -f Dockerfile.frontend -t <dockerhub-user>/kanbanflow-frontend:latest --no-cache . && \
+  docker build -f Dockerfile.backend -t <dockerhub-user>/kanbanflow-backend:latest --no-cache . && \
+  cd .. && docker rm -f kanbanflow-frontend kanbanflow-backend && docker compose up -d"
 ```
 
 ---
@@ -191,7 +183,7 @@ cat .env.production
 # Deve conter: VITE_API_URL=https://kanbanapi.visiochat.cloud
 
 # Rebuild necessário após alterar .env.production
-docker build -f Dockerfile.frontend -t jucivanfsantos/kanbanflow-frontend:latest --no-cache .
+docker build -f Dockerfile.frontend -t <dockerhub-user>/kanbanflow-frontend:latest --no-cache .
 ```
 
 ### Dados não persistem
@@ -238,14 +230,14 @@ docker volume rm kanbanflow-pro_kanban_data
 
 ## ✅ Checklist de Deploy
 
-- [x] VPS acessível via SSH (72.60.143.197)
-- [x] Docker instalado e rodando
-- [x] Traefik configurado na rede `traefik_public`
-- [x] DNS: `kanbanflow.visiochat.cloud` → 72.60.143.197
-- [x] DNS: `kanbanapi.visiochat.cloud` → 72.60.143.197
-- [x] Imagens Docker construídas
-- [x] Containers rodando e healthy
-- [x] HTTPS/SSL funcionando via Let's Encrypt
-- [x] CORS configurado (FRONTEND_URL)
-- [x] API respondendo em /api/health
-- [x] Dados persistindo em volume Docker
+- [ ] VPS acessível via SSH
+- [ ] Docker instalado e rodando
+- [ ] Traefik configurado na rede `traefik_public`
+- [ ] DNS: `kanbanflow.visiochat.cloud` → IP do VPS
+- [ ] DNS: `kanbanapi.visiochat.cloud` → IP do VPS
+- [ ] Imagens Docker construídas
+- [ ] Containers rodando e healthy
+- [ ] HTTPS/SSL funcionando via Let's Encrypt
+- [ ] CORS configurado (FRONTEND_URL)
+- [ ] API respondendo em /api/health
+- [ ] Dados persistindo em volume Docker
