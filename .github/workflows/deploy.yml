@@ -1,15 +1,3 @@
-# ========================================
-# GitHub Actions - Deploy Automatizado
-# KanbanFlow Pro - Docker Compose + Traefik
-# ========================================
-# Secrets necessários no GitHub:
-#   DOCKER_USERNAME  - Usuário do Docker Hub
-#   DOCKER_TOKEN     - Token de acesso do Docker Hub
-#   VPS_HOST         - IP do servidor VPS
-#   VPS_USER         - Usuário SSH (ex: root)
-#   VPS_SSH_KEY      - Chave SSH privada
-# ========================================
-
 name: Deploy to Production
 
 on:
@@ -18,180 +6,122 @@ on:
       - production
   workflow_dispatch:
 
-env:
-  FRONTEND_IMAGE: ${{ secrets.DOCKER_USERNAME }}/kanbanflow-frontend
-  BACKEND_IMAGE: ${{ secrets.DOCKER_USERNAME }}/kanbanflow-backend
-
 jobs:
   # ==========================================
-  # Job 1: Build e Test
+  # Job 1: Build and Test
   # ==========================================
   build-and-test:
-    name: Build and Test
     runs-on: ubuntu-latest
 
     steps:
-      - name: 📥 Checkout code
+      - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: 🔧 Setup Node.js
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: 'npm'
 
-      - name: 📦 Install dependencies
+      - name: Install dependencies
         run: npm ci
 
-      - name: 🔍 Run linter
-        run: npm run lint || echo "Lint skipped - add script to package.json"
+      - name: Run lint
+        run: npm run lint || true
 
-      - name: 🏗️ Build frontend
+      - name: Build frontend
         run: |
           echo "VITE_API_URL=https://kanbanapi.visiochat.cloud" > .env.production
           npm run build
 
-      - name: ✅ Verify build output
-        run: |
-          if [ ! -d "dist" ]; then
-            echo "❌ Build failed - dist folder not found"
-            exit 1
-          fi
-          echo "✅ Build successful"
+      - name: Verify build
+        run: test -d dist
 
   # ==========================================
-  # Job 2: Build e Push Docker Images
+  # Job 2: Build and Push Docker Images
   # ==========================================
   build-images:
-    name: Build Docker Images
     runs-on: ubuntu-latest
     needs: build-and-test
+    environment: producao
+
+    env:
+      FRONTEND_IMAGE: ${{ secrets.DOCKERHUB_USERNAME }}/kanbanflow-frontend
+      BACKEND_IMAGE: ${{ secrets.DOCKERHUB_USERNAME }}/kanbanflow-backend
 
     steps:
-      - name: 📥 Checkout code
+      - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: 🔐 Login to Docker Hub
+      - name: Login to Docker Hub
         uses: docker/login-action@v3
         with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_TOKEN }}
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: 🏗️ Build Frontend Image
-        run: |
-          echo "VITE_API_URL=https://kanbanapi.visiochat.cloud" > .env.production
-          docker build -f Dockerfile.frontend -t ${{ env.FRONTEND_IMAGE }}:latest -t ${{ env.FRONTEND_IMAGE }}:${{ github.sha }} .
+      - name: Setup Docker Buildx
+        uses: docker/setup-buildx-action@v3
 
-      - name: 🏗️ Build Backend Image
-        run: |
-          docker build -f Dockerfile.backend -t ${{ env.BACKEND_IMAGE }}:latest -t ${{ env.BACKEND_IMAGE }}:${{ github.sha }} .
+      - name: Build & Push Frontend Image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: Dockerfile.frontend
+          push: true
+          tags: |
+            ${{ env.FRONTEND_IMAGE }}:latest
+            ${{ env.FRONTEND_IMAGE }}:${{ github.sha }}
 
-      - name: 📤 Push Frontend Image
-        run: |
-          docker push ${{ env.FRONTEND_IMAGE }}:latest
-          docker push ${{ env.FRONTEND_IMAGE }}:${{ github.sha }}
-
-      - name: 📤 Push Backend Image
-        run: |
-          docker push ${{ env.BACKEND_IMAGE }}:latest
-          docker push ${{ env.BACKEND_IMAGE }}:${{ github.sha }}
+      - name: Build & Push Backend Image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: Dockerfile.backend
+          push: true
+          tags: |
+            ${{ env.BACKEND_IMAGE }}:latest
+            ${{ env.BACKEND_IMAGE }}:${{ github.sha }}
 
   # ==========================================
   # Job 3: Deploy to VPS
   # ==========================================
   deploy:
-    name: Deploy to VPS
     runs-on: ubuntu-latest
     needs: build-images
+    environment: producao
 
     steps:
-      - name: 📥 Checkout code
+      - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: 🔐 Setup SSH
+      - name: Setup SSH
         run: |
           mkdir -p ~/.ssh
           echo "${{ secrets.VPS_SSH_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H ${{ secrets.VPS_HOST }} >> ~/.ssh/known_hosts
 
-      - name: 📁 Create directory structure
-        run: |
-          ssh ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} "mkdir -p /var/www/kanbanflow-pro"
-
-      - name: 📤 Upload docker-compose.yml
-        run: |
-          scp docker-compose.yml ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }}:/var/www/kanbanflow-pro/
-
-      - name: 🚀 Deploy with Docker Compose
+      - name: Deploy with Docker Compose
         run: |
           ssh ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} << 'EOF'
             cd /var/www/kanbanflow-pro
-
-            # Stop and remove existing containers
-            docker rm -f kanbanflow-frontend kanbanflow-backend 2>/dev/null || true
-
-            # Start services with Docker Compose
+            docker compose pull
             docker compose up -d
-
-            # Wait for services to be healthy
-            sleep 15
-
-            # Check container status
-            docker ps --filter name=kanbanflow --format 'table {{.Names}}\t{{.Status}}'
-
-            # Cleanup old images
-            docker image prune -af --filter "until=24h"
           EOF
-
-      - name: ✅ Verify deployment
-        run: |
-          ssh ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} << 'EOF'
-            echo "🔍 Checking containers..."
-            docker ps --filter name=kanbanflow --format 'table {{.Names}}\t{{.Status}}\t{{.Ports}}'
-          EOF
-
-      - name: 🧹 Cleanup SSH
-        if: always()
-        run: |
-          rm -f ~/.ssh/id_rsa
 
   # ==========================================
   # Job 4: Health Check
   # ==========================================
   health-check:
-    name: Health Check
     runs-on: ubuntu-latest
     needs: deploy
+    environment: producao
 
     steps:
-      - name: ⏳ Wait for services to stabilize
+      - name: Wait for services
         run: sleep 10
 
-      - name: 🏥 Check Frontend Health
-        run: |
-          echo "Checking frontend..."
-          for i in 1 2 3; do
-            curl -f -s https://kanbanflow.visiochat.cloud > /dev/null && break
-            echo "Attempt $i failed, retrying in 10s..."
-            sleep 10
-          done
-          curl -f https://kanbanflow.visiochat.cloud > /dev/null
-          echo "✅ Frontend is healthy"
+      - name: Frontend Health
+        run: curl -f https://kanbanflow.visiochat.cloud
 
-      - name: 🏥 Check Backend Health
-        run: |
-          echo "Checking backend..."
-          for i in 1 2 3; do
-            curl -f -s https://kanbanapi.visiochat.cloud/api/health > /dev/null && break
-            echo "Attempt $i failed, retrying in 10s..."
-            sleep 10
-          done
-          curl -f https://kanbanapi.visiochat.cloud/api/health
-          echo "✅ Backend is healthy"
-
-      - name: 🎉 Deployment Complete
-        run: |
-          echo "🎉 Deployment successful!"
-          echo "Frontend: https://kanbanflow.visiochat.cloud"
-          echo "Backend API: https://kanbanapi.visiochat.cloud"
+      - name: Backend Health
+        run: curl -f https://kanbanapi.visiochat.cloud/api/health

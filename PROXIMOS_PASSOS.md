@@ -28,48 +28,42 @@
 - [x] Sanitização de segurança (IPs e credenciais removidos dos docs)
 - [x] Branches organizados (production + main)
 
+### CI/CD
+
+- [x] GitHub Actions workflow com 4 jobs (build, docker, deploy, health check)
+- [x] Deploy automático a cada push no branch `production`
+- [x] Secrets configurados (VPS_HOST, VPS_USER, VPS_SSH_KEY, DOCKER_USERNAME, DOCKER_TOKEN)
+- [x] Health check com retry automático pós-deploy
+
 ---
 
 ## 🔜 Próximos Passos Prioritários
 
-### 1. 🔄 CI/CD - Deploy Automático via Git
+### 1. 🔄 CI/CD - Deploy Automático via Git ✅
 
-Configurar GitHub Actions para deploy automático quando o branch `production` for atualizado:
+O workflow de CI/CD já está configurado em `.github/workflows/deploy.yml` e é disparado automaticamente a cada push no branch `production` (ou via `workflow_dispatch` manual).
 
-```yaml
-# .github/workflows/deploy.yml
-name: Deploy to VPS
-on:
-  push:
-    branches: [production]
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Deploy via SSH
-        uses: appleboy/ssh-action@v1
-        with:
-          host: ${{ secrets.VPS_HOST }}
-          username: ${{ secrets.VPS_USER }}
-          key: ${{ secrets.VPS_SSH_KEY }}
-          script: |
-            cd /var/www/kanbanflow-pro/temp
-            git pull origin production
-            docker build -f Dockerfile.frontend -t ${{ secrets.DOCKER_USERNAME }}/kanbanflow-frontend:latest --no-cache .
-            docker build -f Dockerfile.backend -t ${{ secrets.DOCKER_USERNAME }}/kanbanflow-backend:latest --no-cache .
-            cd /var/www/kanbanflow-pro
-            docker rm -f kanbanflow-frontend kanbanflow-backend
-            docker compose up -d
-```
+**Pipeline (4 Jobs):**
+
+1. **Build and Test** — Instala dependências, roda linter, builda o frontend com Vite e verifica se a pasta `dist` foi gerada
+2. **Build Docker Images** — Login no Docker Hub, build das imagens frontend/backend com tags `latest` e `SHA`, push para o registry
+3. **Deploy to VPS** — Conecta via SSH, envia `docker-compose.yml`, remove containers antigos, sobe novos com `docker compose up -d`
+4. **Health Check** — Aguarda estabilização e testa URLs de produção com retry (3 tentativas)
+
+**Triggers:**
+
+- Push no branch `production`
+- Dispatch manual (botão "Run workflow" no GitHub)
 
 **Secrets necessários no GitHub:**
 
 - `VPS_HOST`: IP do servidor VPS
-- `VPS_USER`: Usuário SSH
+- `VPS_USER`: Usuário SSH (ex: root)
 - `VPS_SSH_KEY`: Chave SSH privada para acesso ao VPS
 - `DOCKER_USERNAME`: Usuário do Docker Hub
 - `DOCKER_TOKEN`: Token de acesso do Docker Hub
+
+> Arquivo completo: [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml)
 
 ### 2. 🗄️ Migrar para Banco de Dados
 
@@ -126,16 +120,16 @@ Substituir `tasks.json` por um banco de dados real:
 
 ## 🗓️ Roadmap Sugerido
 
-| Fase       | Item                       | Prioridade |
-| ---------- | -------------------------- | ---------- |
-| **Fase 1** | CI/CD com GitHub Actions   | 🔴 Alta    |
-| **Fase 1** | Backup automático de dados | 🔴 Alta    |
-| **Fase 2** | Migração para PostgreSQL   | 🟡 Média   |
-| **Fase 2** | Autenticação JWT           | 🟡 Média   |
-| **Fase 3** | Múltiplos boards           | 🟢 Normal  |
-| **Fase 3** | Responsividade mobile      | 🟢 Normal  |
-| **Fase 4** | Websockets (tempo real)    | 🔵 Baixa   |
-| **Fase 4** | Testes automatizados       | 🔵 Baixa   |
+| Fase       | Item                         | Prioridade   |
+| ---------- | ---------------------------- | ------------ |
+| **Fase 1** | ~~CI/CD com GitHub Actions~~ | ✅ Concluído |
+| **Fase 1** | Backup automático de dados   | 🔴 Alta      |
+| **Fase 2** | Migração para PostgreSQL     | 🟡 Média     |
+| **Fase 2** | Autenticação JWT             | 🟡 Média     |
+| **Fase 3** | Múltiplos boards             | 🟢 Normal    |
+| **Fase 3** | Responsividade mobile        | 🟢 Normal    |
+| **Fase 4** | Websockets (tempo real)      | 🔵 Baixa     |
+| **Fase 4** | Testes automatizados         | 🔵 Baixa     |
 
 ---
 
