@@ -13,30 +13,23 @@ services:
     image: jucivanfsantos/kanbanflow-frontend:latest
     container_name: kanbanflow-frontend
     restart: unless-stopped
+    ports:
+      - "8080:80"
     networks:
-      - traefik_public
+      - kanban_network
     labels:
-      # Habilitar Traefik
       - "traefik.enable=true"
       - "traefik.docker.network=traefik_public"
-
-      # Configuração HTTP -> HTTPS redirect
       - "traefik.http.routers.kanbanflow-frontend.rule=Host(`kanbanflow.visiochat.cloud`)"
       - "traefik.http.routers.kanbanflow-frontend.entrypoints=web"
       - "traefik.http.routers.kanbanflow-frontend.middlewares=redirect-to-https"
-
-      # Configuração HTTPS
       - "traefik.http.routers.kanbanflow-frontend-secure.rule=Host(`kanbanflow.visiochat.cloud`)"
       - "traefik.http.routers.kanbanflow-frontend-secure.entrypoints=websecure"
       - "traefik.http.routers.kanbanflow-frontend-secure.tls=true"
       - "traefik.http.routers.kanbanflow-frontend-secure.tls.certresolver=le"
       - "traefik.http.routers.kanbanflow-frontend-secure.service=kanbanflow-frontend"
-
-      # Middleware de redirecionamento
       - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
       - "traefik.http.middlewares.redirect-to-https.redirectscheme.permanent=true"
-
-      # Service e porta
       - "traefik.http.services.kanbanflow-frontend.loadbalancer.server.port=80"
 
   # ==========================================
@@ -46,8 +39,10 @@ services:
     image: jucivanfsantos/kanbanflow-backend:latest
     container_name: kanbanflow-backend
     restart: unless-stopped
+    ports:
+      - "3001:3001"
     networks:
-      - traefik_public
+      - kanban_network
     volumes:
       - kanban_data:/app/data
     environment:
@@ -56,23 +51,16 @@ services:
       - FRONTEND_URL=https://kanbanflow.visiochat.cloud
       - DATA_FILE_PATH=/app/data/tasks.json
     labels:
-      # Habilitar Traefik
       - "traefik.enable=true"
       - "traefik.docker.network=traefik_public"
-
-      # Configuração HTTP -> HTTPS redirect
       - "traefik.http.routers.kanbanflow-backend.rule=Host(`kanbamapi.visiochat.cloud`)"
       - "traefik.http.routers.kanbanflow-backend.entrypoints=web"
       - "traefik.http.routers.kanbanflow-backend.middlewares=redirect-to-https"
-
-      # Configuração HTTPS
       - "traefik.http.routers.kanbanflow-backend-secure.rule=Host(`kanbamapi.visiochat.cloud`)"
       - "traefik.http.routers.kanbanflow-backend-secure.entrypoints=websecure"
       - "traefik.http.routers.kanbanflow-backend-secure.tls=true"
       - "traefik.http.routers.kanbanflow-backend-secure.tls.certresolver=le"
       - "traefik.http.routers.kanbanflow-backend-secure.service=kanbanflow-backend"
-
-      # Service e porta
       - "traefik.http.services.kanbanflow-backend.loadbalancer.server.port=3001"
 
 # ==========================================
@@ -86,5 +74,7 @@ volumes:
 # Redes
 # ==========================================
 networks:
+  kanban_network:
+    driver: bridge
   traefik_public:
     external: true
